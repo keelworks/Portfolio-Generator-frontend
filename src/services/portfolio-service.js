@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE = process.env.API_BASE || 'http://localhost:4000/api/users';
+const API_BASE = 'https://portfolio-generator-7s61.onrender.com/api/users' ||
+  'http://localhost:4000/api/users';
 
 export const registerUser = async (userData) => {
   try {
