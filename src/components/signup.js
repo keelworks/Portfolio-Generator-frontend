@@ -1,15 +1,20 @@
 import {useState} from 'react';
+import {registerUser} from '../services/portfolio-service';
 
 /**
- * Signup.
+ * login。
  *
- * @return {number} The sum of the two numbers.
+ * @return {any} - login
  */
 function Signup() {
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
+  const [confirmEmail, setConfirmEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordMatch, setPasswordMatch] = useState('');
+  const [emailMatch, setEmailMatch] = useState('');
 
   const handleFirstnameChange = (event) => {
     setFirstname(event.target.value);
@@ -23,12 +28,48 @@ function Signup() {
     setEmail(event.target.value);
   };
 
+  const handleConfirmEmailChange = (event) => {
+    setConfirmEmail(event.target.value);
+
+    if (confirmEmail === email) {
+      setEmailMatch(true);
+    } else {
+      setEmailMatch(false);
+    }
+  };
+
+  const handleConfirmPasswordChange = (event) => {
+    setConfirmPassword(event.target.value);
+
+    if (confirmPassword === password) {
+      setPasswordMatch(true);
+    } else {
+      setPasswordMatch(false);
+    }
+  };
+
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = (event) => {
-    console.log('Hello World');
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const userData = {
+        username: email,
+        password: password,
+        firstName: firstname,
+        lastName: lastname,
+      };
+
+      const user = await registerUser(userData);
+      console.log('Registration successful: ', user);
+      // Perform any additional actions after successful registration.
+    } catch (error) {
+      console.error('Registration failed: ', error);
+      // Handle registration error.
+    }
   };
 
   return (
@@ -76,21 +117,30 @@ function Signup() {
                   type="email"
                   placeholder="Confirm Email*"
                   className="form-control mb-3"
+                  onChange={handleConfirmEmailChange}
+                  required
+                />
+                {!emailMatch && (
+                  <p className="text-danger">Email do not match.</p>
+                )}
+                <input
+                  type="password"
+                  value={password}
+                  placeholder="Password*"
+                  className="form-control mb-3"
+                  onChange={handlePasswordChange}
                   required
                 />
                 <input
                   type="password"
-                  value={password}
-                  placeholder="password"
+                  placeholder="Confirm Password*"
                   className="form-control mb-3"
-                  onChange={handlePasswordChange}
+                  onChange={handleConfirmPasswordChange}
+                  required
                 />
-                <input
-                  type="password"
-                  placeholder="Confirm Password"
-                  className="form-control mb-3"
-                />
-
+                {!passwordMatch && (
+                  <p className="text-danger">Password do not match.</p>
+                )}
                 <button type="submit" className="btn btn-primary mb-3">
                   Sign Up
                 </button>
