@@ -1,6 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from 'react-router-dom';
 import './index.css';
 import Login from './components/login';
 import Signup from './components/signup';
@@ -13,6 +18,7 @@ root.render(
         <Routes>
           <Route path="/login" Component={Login} />
           <Route path="/signup" Component={Signup} />
+          <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </Router>
     </React.StrictMode>,

@@ -35,49 +35,47 @@ function Login() {
   return (
     <div className="App">
       <header className="App-header"></header>
-      <body>
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-4">
-              <form onSubmit={handleSubmit} className="border p-3">
-                <h2>Log in</h2>
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-4">
+            <form onSubmit={handleSubmit} className="border p-3">
+              <h2>Log in</h2>
 
-                <input
-                  type="text"
-                  value={username}
-                  placeholder="username"
-                  className="form-control mb-3"
-                  onChange={handleUsernameChange}
-                />
-                <input
-                  type="password"
-                  value={password}
-                  placeholder="password"
-                  className="form-control mb-3"
-                  onChange={handlePasswordChange}
-                />
-                <button type="submit" className="btn btn-primary mb-3">
-                  Login
-                </button>
-                <div className="row">
-                  <div className="col-6">
-                    <a href="#" className="text-decoration-none text-primary">
-                      Forgot password?
-                    </a>
-                  </div>
-                  <div className="col-6">
-                    <Link
-                      to="/signup"
-                      className="text-decoration-none text-primary">
-                      Sign up
-                    </Link>
-                  </div>
+              <input
+                type="text"
+                value={username}
+                placeholder="username"
+                className="form-control mb-3"
+                onChange={handleUsernameChange}
+              />
+              <input
+                type="password"
+                value={password}
+                placeholder="password"
+                className="form-control mb-3"
+                onChange={handlePasswordChange}
+              />
+              <button type="submit" className="btn btn-primary mb-3">
+                Login
+              </button>
+              <div className="row">
+                <div className="col-6">
+                  <a href="#" className="text-decoration-none text-primary">
+                    Forgot password?
+                  </a>
                 </div>
-              </form>
-            </div>
+                <div className="col-6">
+                  <Link
+                    to="/signup"
+                    className="text-decoration-none text-primary">
+                    Sign up
+                  </Link>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
-      </body>
+      </div>
     </div>
   );
 }
