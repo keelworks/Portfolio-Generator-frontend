@@ -26,3 +26,13 @@ export const loginUser = async ({username, password}) => {
     throw error;
   }
 };
+
+export const logout = async () => {
+  const response = await api.post(`${API_BASE}/logout`);
+  return response.data;
+};
+
+export const deleteUser = async (uid) => {
+  const response = await api.delete(`${API_BASE}/${uid}`);
+  return response.data;
+};

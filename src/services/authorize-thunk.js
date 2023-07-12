@@ -17,3 +17,14 @@ export const loginThunk = createAsyncThunk('users/login',
         return thunkAPI.rejectWithValue(error.message);
       }
     });
+
+export const logoutThunk = createAsyncThunk('users/logout', async () => {
+  await userService.logout();
+});
+
+export const deleteUserThunk = createAsyncThunk('users/deleteUser',
+    async (userId) => {
+      await userService.deleteUser(userId);
+      return userId;
+    },
+);

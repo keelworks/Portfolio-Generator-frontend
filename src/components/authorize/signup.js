@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {registerThunk} from '../services/authorize-thunk';
+import {registerThunk} from '../../services/authorize-thunk';
 
 /**
  * login。

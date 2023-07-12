@@ -9,8 +9,9 @@ import {
   Routes,
 } from 'react-router-dom';
 import './index.css';
-import Login from './components/login';
-import Signup from './components/signup';
+import Login from './components/authorize/login';
+import Signup from './components/authorize/signup';
+import DashBoard from './components/index';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -21,6 +22,7 @@ root.render(
           <Routes>
             <Route path="/login" Component={Login} />
             <Route path="/signup" Component={Signup} />
+            <Route path="/dashBoard/*" element={<DashBoard/>} />
             <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         </Router>

@@ -1,7 +1,8 @@
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
-import {loginThunk} from '../services/authorize-thunk';
+import {loginThunk} from '../../services/authorize-thunk';
+import {useNavigate} from 'react-router-dom';
 
 /**
  * login。
@@ -12,17 +13,18 @@ function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
 
   const user = useSelector((state) => state.currentUser);
   console.log(user);
 
   useEffect(() => {
-    if (user) {
+    if (user && user.user !== null) { // 确保 user 对象存在并且其 user 属性不为 null
       console.log('Login successful: ', user);
-      // 这里可以执行登录成功后的其他操作
+      navigate('/dashBoard');
     }
-  }, [user]);
+  }, [user, navigate]);
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   };
@@ -70,7 +72,8 @@ function Login() {
               </button>
               <div className="row">
                 <div className="col-6">
-                  <a href="#" className="text-decoration-none text-primary">
+                  <a href="src/components#"
+                    className="text-decoration-none text-primary">
                     Forgot password?
                   </a>
                 </div>

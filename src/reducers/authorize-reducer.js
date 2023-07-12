@@ -1,22 +1,33 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {
-  loginThunk,
+  deleteUserThunk,
+  loginThunk, logoutThunk,
   registerThunk,
 } from '../services/authorize-thunk';
 
 const authorizeSlice = createSlice({
   name: 'authorize',
-  initialState: {user: null},
+  initialState: null,
   reducers: {},
   extraReducers: (builder) => {
     builder
         .addCase(loginThunk.fulfilled, (state, action) => {
-          state.user = action.payload;
+          return action.payload;
         })
         .addCase(loginThunk.rejected, (state, action) => {
-          state.error = action.payload;
+          return {error: action.payload};
+        })
+        .addCase(logoutThunk.fulfilled, (state) => {
+          return null;
         })
         .addCase(registerThunk.fulfilled, (state, {payload}) => {
+        })
+        .addCase(deleteUserThunk.fulfilled, (state) => {
+          return null;
+        })
+        .addCase(deleteUserThunk.rejected, (state, action) => {
+        // Handle error here
+          console.error('Delete user failed:', action.error);
         })
     ;
   },
