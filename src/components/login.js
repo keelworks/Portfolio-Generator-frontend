@@ -1,6 +1,7 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {loginUser} from '../services/portfolio-service';
+import {useSelector, useDispatch} from 'react-redux';
+import {loginThunk} from '../services/authorize-thunk';
 
 /**
  * login。
@@ -10,7 +11,18 @@ import {loginUser} from '../services/portfolio-service';
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
 
+
+  const user = useSelector((state) => state.currentUser);
+  console.log(user);
+
+  useEffect(() => {
+    if (user) {
+      console.log('Login successful: ', user);
+      // 这里可以执行登录成功后的其他操作
+    }
+  }, [user]);
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   };
@@ -23,9 +35,7 @@ function Login() {
     event.preventDefault();
 
     try {
-      const user = await loginUser({username, password});
-      console.log('Login successful: ', user);
-      // Perform any additional actions after successful login.
+      await dispatch(loginThunk({username, password}));
     } catch (error) {
       console.error('Login failed: ', error);
       // Handle login error.

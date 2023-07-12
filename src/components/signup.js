@@ -1,5 +1,6 @@
 import {useState} from 'react';
-import {registerUser} from '../services/portfolio-service';
+import {useDispatch} from 'react-redux';
+import {registerThunk} from '../services/authorize-thunk';
 
 /**
  * login。
@@ -15,6 +16,8 @@ function Signup() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordMatch, setPasswordMatch] = useState('');
   const [emailMatch, setEmailMatch] = useState('');
+
+  const dispatch = useDispatch();
 
   const handleFirstnameChange = (event) => {
     setFirstname(event.target.value);
@@ -63,7 +66,10 @@ function Signup() {
         lastName: lastname,
       };
 
-      const user = await registerUser(userData);
+      const action = registerThunk(userData);
+      const resultAction = await dispatch(action);
+      const user = resultAction.payload;
+
       console.log('Registration successful: ', user);
       // Perform any additional actions after successful registration.
     } catch (error) {

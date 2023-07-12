@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import {Provider} from 'react-redux';
+import store from './store';
 import {
   BrowserRouter as Router,
   Navigate,
@@ -14,13 +16,15 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-      <Router>
-        <Routes>
-          <Route path="/login" Component={Login} />
-          <Route path="/signup" Component={Signup} />
-          <Route path="*" element={<Navigate to="/login" replace />} />
-        </Routes>
-      </Router>
+      <Provider store={store}>
+        <Router>
+          <Routes>
+            <Route path="/login" Component={Login} />
+            <Route path="/signup" Component={Signup} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          </Routes>
+        </Router>
+      </Provider>
     </React.StrictMode>,
 );
 
