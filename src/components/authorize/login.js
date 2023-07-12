@@ -1,11 +1,14 @@
 import {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link as RouterLink} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {loginThunk} from '../../services/authorize-thunk';
 import {useNavigate} from 'react-router-dom';
+import {Button, TextField, Grid, Link, Container, Typography}
+  from '@mui/material';
+import Box from '@mui/material/Box';
 
 /**
- * login。
+ * Login.
  *
  * @return {any} - login
  */
@@ -15,16 +18,17 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   const user = useSelector((state) => state.currentUser);
   console.log(user);
 
   useEffect(() => {
-    if (user && user.user !== null) { // 确保 user 对象存在并且其 user 属性不为 null
+    // Ensure user object exists and its user property is not null
+    if (user && user.user !== null) {
       console.log('Login successful: ', user);
       navigate('/dashBoard');
     }
   }, [user, navigate]);
+
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   };
@@ -45,51 +49,68 @@ function Login() {
   };
 
   return (
-    <div className="App">
-      <header className="App-header"></header>
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-4">
-            <form onSubmit={handleSubmit} className="border p-3">
-              <h2>Log in</h2>
-
-              <input
-                type="text"
-                value={username}
-                placeholder="username"
-                className="form-control mb-3"
-                onChange={handleUsernameChange}
-              />
-              <input
-                type="password"
-                value={password}
-                placeholder="password"
-                className="form-control mb-3"
-                onChange={handlePasswordChange}
-              />
-              <button type="submit" className="btn btn-primary mb-3">
-                Login
-              </button>
-              <div className="row">
-                <div className="col-6">
-                  <a href="src/components#"
-                    className="text-decoration-none text-primary">
-                    Forgot password?
-                  </a>
-                </div>
-                <div className="col-6">
-                  <Link
-                    to="/signup"
-                    className="text-decoration-none text-primary">
-                    Sign up
-                  </Link>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Container maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Typography component="h1" variant="h5">
+          Log in
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
+            autoFocus
+            value={username}
+            onChange={handleUsernameChange}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={handlePasswordChange}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{mt: 3, mb: 2}}
+          >
+            Log In
+          </Button>
+          <Grid container>
+            <Grid item xs>
+              <Link href="#" variant="body2">
+                Forgot password?
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link component={RouterLink} to="/signup" variant="body2">
+                {'Don\'t have an account? Sign Up'}
+              </Link>
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
+    </Container>
   );
 }
 
