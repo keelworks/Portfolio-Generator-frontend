@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 const VerticalNavbar = () => {
   const classes = useStyles();
-  const [selectedIndex, setSelectedIndex] = useState(1);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
@@ -38,7 +38,7 @@ const VerticalNavbar = () => {
           <ListItemIcon>
             <PersonIcon />
           </ListItemIcon>
-          <ListItemText primary="Me" />
+          <ListItemText primary="profile" />
         </ListItem>
         <ListItem
           component={Link} to="/dashboard/setting"
