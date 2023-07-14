@@ -1,2 +1,2 @@
 # Portfolio-Generator-frontend
-this is the frontend part
+npm init to init and npm start to start it
