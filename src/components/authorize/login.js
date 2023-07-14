@@ -46,7 +46,6 @@ function Login() {
     try {
       await dispatch(loginThunk({username, password}));
     } catch (error) {
-      console.error('Login failed: ', error);
       setError('User does not exist');
     }
   };
