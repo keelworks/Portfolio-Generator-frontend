@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const API_BASE = process.env.REACT_APP_APIENDPOINT ||
-'https://portfolio-generator-7s61.onrender.com/api/users';
+const API_BASE = process.env.REACT_APP_APIENDPOINT || 'http://localhost:4000/api/users';
 
 const api = axios.create({
   withCredentials: true,
@@ -17,12 +16,20 @@ export const registerUser = async (userData) => {
   }
 };
 
+/**
+ * Login.
+ *
+ * @return {any} - login
+ */
 export const loginUser = async ({username, password}) => {
   try {
     const response = await api.post(`${API_BASE}/login`, {username, password});
     return response.data;
   } catch (error) {
-    console.error('Login failed:', error);
+    // console.error('Login failed:', error);
+    if (error.response && error.response.status === 403) {
+      throw new Error('User does not exist');
+    }
     throw error;
   }
 };

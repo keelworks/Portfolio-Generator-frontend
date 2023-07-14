@@ -3,7 +3,7 @@ import {Link as RouterLink} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {loginThunk} from '../../services/authorize-thunk';
 import {useNavigate} from 'react-router-dom';
-import {Button, TextField, Grid, Link, Container, Typography}
+import {Button, TextField, Grid, Link, Container, Typography, Alert}
   from '@mui/material';
 import Box from '@mui/material/Box';
 
@@ -15,17 +15,20 @@ import Box from '@mui/material/Box';
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const user = useSelector((state) => state.currentUser);
-  console.log(user);
+  // const setLoginFailed = useSelector((state) => state.currentUser.error);
 
   useEffect(() => {
     // Ensure user object exists and its user property is not null
-    if (user && user.user !== null) {
+    if (user && user._id) {
       console.log('Login successful: ', user);
       navigate('/dashBoard');
+    } else if (user && user.error === 'User does not exist') {
+      setError('User does not exist');
     }
   }, [user, navigate]);
 
@@ -39,12 +42,12 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    setError(null);
     try {
       await dispatch(loginThunk({username, password}));
     } catch (error) {
       console.error('Login failed: ', error);
-      // Handle login error.
+      setError('User does not exist');
     }
   };
 
@@ -61,6 +64,8 @@ function Login() {
         <Typography component="h1" variant="h5">
           Log in
         </Typography>
+        {error && <Alert severity="error">
+          {error}</Alert>} {/* Display error message */}
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
           <TextField
             variant="outlined"

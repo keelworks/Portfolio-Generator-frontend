@@ -14,7 +14,9 @@ export const loginThunk = createAsyncThunk('users/login',
       } catch (error) {
       // You can dispatch an error action here,
       // or reject the promise with error message
-        return thunkAPI.rejectWithValue(error.message);
+        const errorMessage =
+          error.response ? error.response.data : error.message;
+        return thunkAPI.rejectWithValue(errorMessage);
       }
     });
 
