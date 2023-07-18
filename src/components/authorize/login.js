@@ -3,10 +3,10 @@ import {Link as RouterLink} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {loginThunk} from '../../services/authorize-thunk';
 import {useNavigate} from 'react-router-dom';
-import {Button, TextField, Grid, Link, Container, Typography, Alert}
+import {Button, TextField, Link, Alert, Container, Typography, Box, Divider}
   from '@mui/material';
-import Box from '@mui/material/Box';
-
+import keelworksLog from '../../icons/keelworksIcon.svg';
+import GoogleIcon from '@mui/icons-material/Google';
 /**
  * Login.
  *
@@ -54,18 +54,25 @@ function Login() {
     <Container maxWidth="xs">
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 0,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          justifyContent: 'center',
+          height: '100%', // Height is set to 12/7
+          width: '100%', // Width is set to 100%
         }}
       >
-        <Typography component="h1" variant="h5">
-          Log in
-        </Typography>
-        {error && <Alert severity="error">
-          {error}</Alert>} {/* Display error message */}
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
+        <img src={keelworksLog} alt="Logo" style={{width: '70%'}} />
+        {error && <Alert severity="error">{error}</Alert>}
+        <Box component="form" onSubmit={handleSubmit}
+          noValidate sx={{
+            mt: 3,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%'}}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -94,24 +101,48 @@ function Login() {
           />
           <Button
             type="submit"
-            fullWidth
             variant="contained"
-            sx={{mt: 3, mb: 2}}
+            sx={{mt: 3, mb: 3}}
+            fullWidth
+            style={{fontSize: '20px'}}
           >
-            Log In
+                  Log In
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link component={RouterLink} to="/signup" variant="body2">
-                {'Don\'t have an account? Sign Up'}
-              </Link>
-            </Grid>
-          </Grid>
+          <Typography variant="body2"
+            style={{fontWeight: 'bold', marginBottom: '1rem'}}>
+            {'Don\'t have an account? '}
+            <Link component={RouterLink}
+              to="/signup"
+              style={{textDecoration: 'none', color: 'blue'}}>
+              Sign Up
+            </Link>
+          </Typography>
+          <Link component={RouterLink}
+            to="/forgot-password"
+            variant="body2"
+            style={{color: 'blue', textDecoration: 'none', fontWeight: 'bold'}}
+          >
+            Forgot password?
+          </Link>
+          <Box sx={{my: 2, width: '100%', textAlign: 'center'}}>
+            <Divider style={{backgroundColor: '#000'}} />
+            <Typography variant="caption" component="span"
+              sx={{position: 'relative',
+                top: '-15px',
+                background: '#fff',
+                padding: '0 10px',
+                fontSize: '15px',
+              }}>or
+            </Typography>
+          </Box>
+
+          <Button
+            variant="outlined"
+            fullWidth
+            startIcon={<GoogleIcon />} // 在这里添加 Google 图标
+          >
+            Continue with Google
+          </Button>
         </Box>
       </Box>
     </Container>
