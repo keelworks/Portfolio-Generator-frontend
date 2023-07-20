@@ -1,2 +1,3 @@
 # Portfolio-Generator-frontend
-npm init to init and npm start to start it
+npm install and npm start to start it
+run it :npm install -g eslint
