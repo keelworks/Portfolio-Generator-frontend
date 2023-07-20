@@ -139,11 +139,11 @@ function Login() {
           <Button
             variant="outlined"
             fullWidth
-            startIcon={<GoogleIcon style={{color: 'gray'}} />}
-            style={{
-              borderColor: 'gray', // change the background color
-              color: 'gray', // change the text color
-            }}
+            startIcon={<GoogleIcon/>}
+            // style={{
+            //   borderColor: 'gray', // change the background color
+            //   color: 'gray', // change the text color
+            // }}
           >
             Continue with Google
           </Button>
