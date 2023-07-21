@@ -5,8 +5,11 @@ import {loginThunk} from '../../services/authorize-thunk';
 import {useNavigate} from 'react-router-dom';
 import {Button, TextField, Link, Alert, Container, Typography, Box, Divider}
   from '@mui/material';
+import {InputAdornment, IconButton} from '@mui/material';
 import keelworksLog from '../../icons/keelworksIcon.svg';
 import GoogleIcon from '@mui/icons-material/Google';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 /**
  * Login.
  *
@@ -18,7 +21,6 @@ function Login() {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const user = useSelector((state) => state.currentUser);
   // const setLoginFailed = useSelector((state) => state.currentUser.error);
 
@@ -39,6 +41,8 @@ function Login() {
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
+  // for password toggle purposes
+  const [visible, setVisible]= useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -93,11 +97,20 @@ function Login() {
             fullWidth
             name="password"
             label="Password"
-            type="password"
+            type={!visible ? 'password': 'text'}
             id="password"
             autoComplete="current-password"
             value={password}
             onChange={handlePasswordChange}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position='end'>
+                  <IconButton onClick={() => setVisible(!visible)}>
+                    {visible ? <VisibilityOffIcon/>: <RemoveRedEyeIcon/> }
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           <Button
             type="submit"
