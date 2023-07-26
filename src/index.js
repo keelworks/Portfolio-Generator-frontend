@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
+import {GoogleOAuthProvider} from '@react-oauth/google';
 import store from './store';
 import {
   BrowserRouter as Router,
@@ -16,16 +17,23 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
     <React.StrictMode>
-      <Provider store={store}>
-        <Router>
-          <Routes>
-            <Route path="/login" Component={Login} />
-            <Route path="/signup" Component={Signup} />
-            <Route path="/dashBoard/*" element={<DashBoard/>} />
-            <Route path="*" element={<Navigate to="/login" replace />} />
-          </Routes>
-        </Router>
-      </Provider>
+      <GoogleOAuthProvider
+        // eslint-disable-next-line max-len
+        clientId="929184604144-1vb1k36u2nr0hfeko8lf7ic8v48emt1l.apps.googleusercontent.com"
+        redirectUri="http://localhost:3000/login"
+        scopes= ""
+      >
+        <Provider store={store}>
+          <Router>
+            <Routes>
+              <Route path="/login" Component={Login} />
+              <Route path="/signup" Component={Signup} />
+              <Route path="/dashBoard/*" element={<DashBoard/>} />
+              <Route path="*" element={<Navigate to="/login" replace />} />
+            </Routes>
+          </Router>
+        </Provider>
+      </GoogleOAuthProvider>
     </React.StrictMode>,
     document.getElementById('root'),
 );
