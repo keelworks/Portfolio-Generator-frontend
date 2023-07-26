@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {GoogleOAuthProvider} from '@react-oauth/google';
 import store from './store';
@@ -15,8 +15,7 @@ import Signup from './components/authorize/signup';
 import DashBoard from './components/index';
 import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+ReactDOM.render(
     <React.StrictMode>
       <GoogleOAuthProvider
         // eslint-disable-next-line max-len
@@ -36,6 +35,7 @@ root.render(
         </Provider>
       </GoogleOAuthProvider>
     </React.StrictMode>,
+    document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function
