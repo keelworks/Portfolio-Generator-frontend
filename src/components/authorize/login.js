@@ -7,9 +7,10 @@ import {Button, TextField, Link, Alert, Container, Typography, Box, Divider}
   from '@mui/material';
 import {InputAdornment, IconButton} from '@mui/material';
 import keelworksLog from '../../icons/keelworksIcon.svg';
-import GoogleIcon from '@mui/icons-material/Google';
+// import GoogleIcon from '@mui/icons-material/Google';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import GoogleAuth from './GoogleAuth';
 /**
  * Login.
  *
@@ -21,13 +22,12 @@ function Login() {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const user = useSelector((state) => state.currentUser);
   // const setLoginFailed = useSelector((state) => state.currentUser.error);
-
+  const user = useSelector((state) => state.currentUser);
   useEffect(() => {
     // Ensure user object exists and its user property is not null
     if (user && user._id) {
+      // eslint-disable-next-line max-len
       console.log('Login successful: ', user);
       navigate('/dashBoard');
     } else if (user && user.error === 'User does not exist') {
@@ -149,8 +149,7 @@ function Login() {
               }}>or
             </Typography>
           </Box>
-
-          <Button
+          {/* <Button
             variant="outlined"
             fullWidth
             startIcon={<GoogleIcon/>}
@@ -160,8 +159,10 @@ function Login() {
             // }}
           >
             Continue with Google
-          </Button>
+          </Button> */}
+          <GoogleAuth />
         </Box>
+
       </Box>
     </Container>
   );

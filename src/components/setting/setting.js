@@ -1,3 +1,4 @@
+// eslint-disable-next-line max-len
 import React from 'react';
 import {useDispatch} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
@@ -13,6 +14,7 @@ const SettingsPage = () => {
   const userId = useSelector((state) => state.currentUser ? state.currentUser._id : null);
 
   const handleLogoutClick = () => {
+    // eslint-disable-next-line max-len
     console.log('Logout button clicked');
     // 在这里添加你的注销逻辑
     dispatch(logoutThunk())
