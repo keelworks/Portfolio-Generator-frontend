@@ -27,13 +27,15 @@ function GoogleAuth() {
         buttonText="Sign in with Google"
         onSuccess={(res) => {
           // eslint-disable-next-line max-len
-          console.log('credentialResponse', res);
+          console.log('Login success!', res);
+        }}
+        onFailure={(res) =>{
+          console.log('Login fail!', res);
         }}
         onError={(error) => {
           console.log('error', error);
         }}
-        // cookiePolicy={'same-origin-strict'}
-        cookiePolicy={'none'}
+        cookiePolicy={'same-origin-strict'}
         isSignedIn={true}
       />
     </div>
