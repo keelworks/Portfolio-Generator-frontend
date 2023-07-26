@@ -34,6 +34,21 @@ export const loginUser = async ({username, password}) => {
   }
 };
 
+export const googleLogin = async ({tokenId}) => {
+  try {
+    // 请注意，我这里假设你的后端已经准备好处理一个新的 `/google-login` 请求
+    // 这个请求需要接收一个 tokenId，并使用它来完成 Google 登录的验证流程
+    const response = await api.post(`${API_BASE}/google-login`, {tokenId});
+    return response.data;
+  } catch (error) {
+    // 根据需要处理错误
+    if (error.response && error.response.status === 403) {
+      throw new Error('User does not exist');
+    }
+    throw error;
+  }
+};
+
 export const logout = async () => {
   const response = await api.post(`${API_BASE}/logout`);
   return response.data;

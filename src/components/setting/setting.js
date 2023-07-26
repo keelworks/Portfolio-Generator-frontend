@@ -17,19 +17,18 @@ const SettingsPage = () => {
     // 在这里添加你的注销逻辑
     dispatch(logoutThunk())
         .then(() => {
-          navigate('/login'); // 你的登录页面路由，这里假设它是/login
+          navigate('/login');
         });
   };
 
   const handleDeleteAccountClick = () => {
     console.log('Delete Account button clicked');
-    // 在这里添加你的删除帐户逻辑
     // eslint-disable-next-line max-len
     const confirmation = window.confirm('Are you sure you want to delete your account?');
     if (confirmation) {
       dispatch(deleteUserThunk(userId))
           .then(() => {
-            navigate('/login'); // 你的登录页面路由，这里假设它是/login
+            navigate('/login');
           });
     }
   };

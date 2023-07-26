@@ -20,6 +20,21 @@ export const loginThunk = createAsyncThunk('users/login',
       }
     });
 
+export const googleLoginThunk = createAsyncThunk('users/googleLogin',
+    async (tokenId, thunkAPI) => {
+      try {
+      // 调用一个服务来处理 Google 登录。
+      // 这个服务需要接受一个 tokenId，并与 Google 的服务进行验证
+        const loggedInUser = await userService.googleLogin({tokenId});
+        return loggedInUser;
+      } catch (error) {
+      // 处理错误，可以向 reducer 发送一个错误 action，或者使用错误信息 reject promise
+        // eslint-disable-next-line max-len
+        const errorMessage = error.response ? error.response.data : error.message;
+        return thunkAPI.rejectWithValue(errorMessage);
+      }
+    });
+
 export const logoutThunk = createAsyncThunk('users/logout', async () => {
   await userService.logout();
 });

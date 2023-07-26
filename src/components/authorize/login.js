@@ -1,15 +1,16 @@
 import {useEffect, useState} from 'react';
 import {Link as RouterLink} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
-import {loginThunk} from '../../services/authorize-thunk';
+import {googleLoginThunk, loginThunk} from '../../services/authorize-thunk';
 import {useNavigate} from 'react-router-dom';
 import {Button, TextField, Link, Alert, Container, Typography, Box, Divider}
   from '@mui/material';
 import {InputAdornment, IconButton} from '@mui/material';
 import keelworksLog from '../../icons/keelworksIcon.svg';
-import GoogleIcon from '@mui/icons-material/Google';
+// import GoogleIcon from '@mui/icons-material/Google';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import GoogleAuth from './GoogleAuth';
 /**
  * Login.
  *
@@ -52,6 +53,16 @@ function Login() {
       await dispatch(loginThunk({username, password}));
     } catch (error) {
       setError('User does not exist');
+    }
+  };
+
+  const handleGoogleLoginSuccess = async (res) => {
+    // Instead of directly making the API request here,
+    // dispatch the thunk action.
+    try {
+      await dispatch(googleLoginThunk({tokenId: res.tokenId}));
+    } catch (error) {
+      console.error('Google login failed:', error);
     }
   };
 
@@ -150,7 +161,7 @@ function Login() {
             </Typography>
           </Box>
 
-          <Button
+          {/* <Button
             variant="outlined"
             fullWidth
             startIcon={<GoogleIcon/>}
@@ -160,8 +171,10 @@ function Login() {
             // }}
           >
             Continue with Google
-          </Button>
+          </Button> */}
+          <GoogleAuth onLoginSuccess={handleGoogleLoginSuccess} />
         </Box>
+
       </Box>
     </Container>
   );
