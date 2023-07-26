@@ -7,6 +7,7 @@ import {Dialog, DialogActions, DialogContent,
 import {useNavigate} from 'react-router-dom';
 import Box from '@mui/material/Box';
 
+
 /**
  * Sign up.
  *
@@ -73,7 +74,7 @@ function Signup() {
       const action = registerThunk(userData);
       const resultAction = await dispatch(action);
       const user = resultAction.payload;
-      // eslint-disable-next-line max-len
+
       console.log('Registration successful: ', user);
       // Perform any additional actions after successful registration.
       setOpen(true);
