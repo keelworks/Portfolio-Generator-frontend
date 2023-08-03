@@ -182,8 +182,9 @@ function Login() {
             clientId={googleCilentID}
             buttonText="Sign in with Google"
             onSuccess={handleGoogleLoginSuccess}
-            // onFailure={handleLoginFailure}
-            // onError={handleError}
+            onError={(error) => {
+              console.log('error:', error);
+            }}
             cookiePolicy={'same-origin-strict'}
             isSignedIn={true}
           />
