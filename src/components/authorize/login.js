@@ -10,7 +10,9 @@ import keelworksLog from '../../icons/keelworksIcon.svg';
 // import GoogleIcon from '@mui/icons-material/Google';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import GoogleAuth from './GoogleAuth';
+// import GoogleAuth from './GoogleAuth';
+// import { Google } from '@mui/icons-material';
+import {GoogleLogin} from '@react-oauth/google';
 /**
  * Login.
  *
@@ -20,12 +22,15 @@ function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const user = useSelector((state) => state.currentUser);
   // const setLoginFailed = useSelector((state) => state.currentUser.error);
 
+  // eslint-disable-next-line max-len
+  const googleCilentID = '929184604144-bbi4os99924mlue3g44r2mabnor7nuhh.apps.googleusercontent.com';
   useEffect(() => {
     // Ensure user object exists and its user property is not null
     if (user && user._id) {
@@ -61,6 +66,7 @@ function Login() {
     // dispatch the thunk action.
     try {
       await dispatch(googleLoginThunk({tokenId: res.tokenId}));
+      navigate('/dashBoard');
     } catch (error) {
       console.error('Google login failed:', error);
     }
@@ -160,7 +166,6 @@ function Login() {
               }}>or
             </Typography>
           </Box>
-
           {/* <Button
             variant="outlined"
             fullWidth
@@ -172,7 +177,16 @@ function Login() {
           >
             Continue with Google
           </Button> */}
-          <GoogleAuth onLoginSuccess={handleGoogleLoginSuccess} />
+          {/* <GoogleAuth onLoginSuccess={handleGoogleLoginSuccess} /> */}
+          <GoogleLogin
+            clientId={googleCilentID}
+            buttonText="Sign in with Google"
+            onSuccess={handleGoogleLoginSuccess}
+            // onFailure={handleLoginFailure}
+            // onError={handleError}
+            cookiePolicy={'same-origin-strict'}
+            isSignedIn={true}
+          />
         </Box>
       </Box>
     </Container>
