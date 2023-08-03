@@ -1,15 +1,18 @@
 import {useEffect, useState} from 'react';
 import {Link as RouterLink} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
-import {loginThunk} from '../../services/authorize-thunk';
+import {googleLoginThunk, loginThunk} from '../../services/authorize-thunk';
 import {useNavigate} from 'react-router-dom';
 import {Button, TextField, Link, Alert, Container, Typography, Box, Divider}
   from '@mui/material';
 import {InputAdornment, IconButton} from '@mui/material';
 import keelworksLog from '../../icons/keelworksIcon.svg';
-import GoogleIcon from '@mui/icons-material/Google';
+// import GoogleIcon from '@mui/icons-material/Google';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+// import GoogleAuth from './GoogleAuth';
+// import { Google } from '@mui/icons-material';
+import {GoogleLogin} from '@react-oauth/google';
 /**
  * Login.
  *
@@ -19,12 +22,15 @@ function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const user = useSelector((state) => state.currentUser);
   // const setLoginFailed = useSelector((state) => state.currentUser.error);
 
+  // eslint-disable-next-line max-len
+  const googleCilentID = '929184604144-bbi4os99924mlue3g44r2mabnor7nuhh.apps.googleusercontent.com';
   useEffect(() => {
     // Ensure user object exists and its user property is not null
     if (user && user._id) {
@@ -52,6 +58,17 @@ function Login() {
       await dispatch(loginThunk({username, password}));
     } catch (error) {
       setError('User does not exist');
+    }
+  };
+
+  const handleGoogleLoginSuccess = async (res) => {
+    // Instead of directly making the API request here,
+    // dispatch the thunk action.
+    try {
+      await dispatch(googleLoginThunk({tokenId: res.tokenId}));
+      navigate('/dashBoard');
+    } catch (error) {
+      console.error('Google login failed:', error);
     }
   };
 
@@ -149,8 +166,7 @@ function Login() {
               }}>or
             </Typography>
           </Box>
-
-          <Button
+          {/* <Button
             variant="outlined"
             fullWidth
             startIcon={<GoogleIcon/>}
@@ -160,7 +176,18 @@ function Login() {
             // }}
           >
             Continue with Google
-          </Button>
+          </Button> */}
+          {/* <GoogleAuth onLoginSuccess={handleGoogleLoginSuccess} /> */}
+          <GoogleLogin
+            clientId={googleCilentID}
+            buttonText="Sign in with Google"
+            onSuccess={handleGoogleLoginSuccess}
+            onError={(error) => {
+              console.log('error:', error);
+            }}
+            cookiePolicy={'same-origin-strict'}
+            isSignedIn={true}
+          />
         </Box>
       </Box>
     </Container>

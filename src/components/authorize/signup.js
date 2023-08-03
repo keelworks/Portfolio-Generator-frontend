@@ -23,7 +23,6 @@ function Signup() {
   const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
 
   const handleFirstnameChange = (event) => {
