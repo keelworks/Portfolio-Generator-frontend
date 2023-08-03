@@ -174,7 +174,6 @@ function Login() {
           </Button> */}
           <GoogleAuth onLoginSuccess={handleGoogleLoginSuccess} />
         </Box>
-
       </Box>
     </Container>
   );
