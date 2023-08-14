@@ -1,11 +1,15 @@
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {registerThunk} from '../../services/authorize-thunk';
-import {Button, TextField, Grid, Container, Typography} from '@mui/material';
-import {Dialog, DialogActions, DialogContent,
-  DialogContentText, DialogTitle} from '@mui/material';
+
+// import {Button, TextField, Grid, Container, Typography} from '@mui/material';
+// import {Dialog, DialogActions, DialogContent,
+// DialogContentText, DialogTitle} from '@mui/material';
 import {useNavigate} from 'react-router-dom';
-import Box from '@mui/material/Box';
+// import Box from '@mui/material/Box';
+// eslint-disable-next-line max-len
+import {Container, Box, Text, Grid, TextInput,
+  Button, Paper, Modal} from '@mantine/core';
 
 
 /**
@@ -83,132 +87,134 @@ function Signup() {
       // Handle registration error.
     }
   };
-
   return (
     <>
-      <Container maxWidth="xs">
+      <Container size="25rem" px={0}>
         <Box
-          sx={{
-            marginTop: 8,
+          style={{
+            marginTop: 80,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
-          <Typography component="h1" variant="h5">
-          Sign up
-          </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 3}}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="fname"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                  value={firstname}
-                  onChange={handleFirstnameChange}
-                />
+          <Text fz="xl" fw= {500} align="center">
+            Sign up
+          </Text>
+          <Paper padding="md" style={{marginTop: '16px'}}>
+            <form onSubmit={handleSubmit}>
+              <Grid gutter="md">
+                <Grid.Col span = {6}>
+                  <TextInput
+                    autoComplete="fname"
+                    required
+                    fullWidth
+                    autoFocus
+                    id="firstName"
+                    label="First Name"
+                    placeholder="First Name*"
+                    value={firstname}
+                    onChange={handleFirstnameChange}
+                    style={{marginBottom: '12px'}}
+                  />
+                </Grid.Col>
+                <Grid.Col span={6}>
+                  <TextInput
+                    required
+                    fullWidth
+                    id="lastName"
+                    label="Last Name"
+                    autoComplete="lname"
+                    placeholder="Last Name*"
+                    value={lastname}
+                    onChange={handleLastnameChange}
+                    style={{marginBottom: '12px'}}
+                  />
+                </Grid.Col>
+                <Grid.Col span={12}>
+                  <TextInput
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    autoComplete="email"
+                    placeholder="Email Address*"
+                    value={email}
+                    onChange={handleEmailChange}
+                    style={{marginBottom: '12px'}}
+                  />
+                </Grid.Col>
+                <Grid.Col span={12}>
+                  <TextInput
+                    required
+                    fullWidth
+                    id="confirmEmail"
+                    label="Confirm Email Address"
+                    autoComplete="confirm-email"
+                    placeholder="Confirm Email Address*"
+                    value={confirmEmail}
+                    onChange={handleConfirmEmailChange}
+                    style={{marginBottom: '12px'}}
+                  />
+                </Grid.Col>
+                <Grid.Col span={12}>
+                  <TextInput
+                    required
+                    fullWidth
+                    type="password"
+                    id="password"
+                    label="Password"
+                    autoComplete="new-password"
+                    placeholder="Password*"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    style={{marginBottom: '12px'}}
+                  />
+                </Grid.Col>
+                <Grid.Col span={12}>
+                  <TextInput
+                    required
+                    fullWidth
+                    type="password"
+                    id="confirmPassword"
+                    label="Confirm Password"
+                    autoComplete="new-password"
+                    placeholder="Confirm Password*"
+                    value={confirmPassword}
+                    onChange={handleConfirmPasswordChange}
+                    style={{marginBottom: '12px'}}
+                  />
+                </Grid.Col>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="lname"
-                  value={lastname}
-                  onChange={handleLastnameChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  value={email}
-                  onChange={handleEmailChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="confirmEmail"
-                  label="Confirm Email Address"
-                  name="confirmEmail"
-                  autoComplete="confirm-email"
-                  value={confirmEmail}
-                  onChange={handleConfirmEmailChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  value={password}
-                  onChange={handlePasswordChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="confirmPassword"
-                  label="Confirm Password"
-                  type="password"
-                  id="confirmPassword"
-                  autoComplete="new-password"
-                  value={confirmPassword}
-                  onChange={handleConfirmPasswordChange}
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{mt: 3, mb: 2}}
-            >
-            Sign Up
-            </Button>
-          </Box>
+              <Button type="submit" fullWidth
+              >
+                Sign Up
+              </Button>
+            </form>
+          </Paper>
         </Box>
       </Container>
-      <Dialog
-        open={open}
-        onClose={() => setOpen(false)}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+      <Modal
+        opened= {open}
+        onClose={()=> setOpen(flase)}
+        title= "You have successfully registered."
       >
-        <DialogTitle id="alert-dialog-title">
-          {'Registration Successful'}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            You have successfully registered.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => {
-            setOpen(false);
-            navigate('/login');
-          }} autoFocus>
+        <div>
+          You have successfully registered.
+          <div style={{marginTop: '16px', display: 'flex',
+            justifyContent: 'flex-end'}}>
+            <Button
+              onClick={() => {
+                setOpen(false);
+                navigate('/login');
+              }}
+              autoFocus
+            >
             Ok
-          </Button>
-        </DialogActions>
-      </Dialog>
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </>
   );
 }
