@@ -3,8 +3,7 @@ import {useDispatch} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import {logoutThunk, deleteUserThunk} from '../../services/authorize-thunk';
-
-import Button from '@material-ui/core/Button';
+import {Button} from '@mantine/core';
 
 const SettingsPage = () => {
   const dispatch = useDispatch();

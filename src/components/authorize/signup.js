@@ -1,13 +1,7 @@
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {registerThunk} from '../../services/authorize-thunk';
-
-// import {Button, TextField, Grid, Container, Typography} from '@mui/material';
-// import {Dialog, DialogActions, DialogContent,
-// DialogContentText, DialogTitle} from '@mui/material';
 import {useNavigate} from 'react-router-dom';
-// import Box from '@mui/material/Box';
-// eslint-disable-next-line max-len
 import {Container, Box, Text, Grid, TextInput,
   Button, Paper, Modal} from '@mantine/core';
 
@@ -25,9 +19,7 @@ function Signup() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [open, setOpen] = useState(false);
-
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
 
   const handleFirstnameChange = (event) => {
