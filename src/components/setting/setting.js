@@ -28,7 +28,7 @@ const SettingsPage = () => {
     if (confirmation) {
       dispatch(deleteUserThunk(userId))
           .then(() => {
-            navigate('/login'); // 你的登录页面路由，这里假设它是/login
+            navigate('users/logout'); // 你的登录页面路由，这里假设它是/login
           });
     }
   };

@@ -6,18 +6,19 @@ import React, {useState} from 'react';
 import {createStyles, Navbar,
   Group, Code, getStylesRef, rem} from '@mantine/core';
 import {
-  IconBellRinging,
-  IconFingerprint,
-  IconKey,
-  IconSettings,
-  Icon2fa,
-  IconDatabaseImport,
-  IconReceipt2,
-  IconSwitchHorizontal,
+  IconWorldWww,
+  IconTrash,
+  IconLayoutDashboard,
   IconLogout,
 } from '@tabler/icons-react';
 // import {MantineLogo} from '@mantine/ds';
 // import {Link} from 'react-router-dom';
+import {logoutThunk, deleteUserThunk} from '../../services/authorize-thunk';
+import {useDispatch} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+// import {Dashboard} from 'tabler-icons-react';
+// import dashBoard from '..';
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -81,35 +82,58 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const data = [
-  {link: '', label: 'Notifications', icon: IconBellRinging},
-  {link: '', label: 'Billing', icon: IconReceipt2},
-  {link: '', label: 'Security', icon: IconFingerprint},
-  {link: '', label: 'SSH Keys', icon: IconKey},
-  {link: '', label: 'Databases', icon: IconDatabaseImport},
-  {link: '', label: 'Authentication', icon: Icon2fa},
-  {link: '', label: 'Other Settings', icon: IconSettings},
+  {link: '#', label: 'Dashboard', icon: IconLayoutDashboard},
+  {link: '#', label: 'Website', icon: IconWorldWww},
 ];
-
 const VerticalNavbar = () => {
   const {classes, cx} = useStyles();
-  const [active, setActive] = useState('Billing');
+  const [active, setActive] = useState('Dashboard');
 
   const links = data.map((item) => (
     // eslint-disable-next-line react/react-in-jsx-scope
-    <a
-      className={cx(classes.link,
-          {[classes.linkActive]: item.label === active})}
-      href={item.link}
-      key={item.label}
-      onClick={(event) => {
-        event.preventDefault();
-        setActive(item.label);
-      }}
-    >
-      <item.icon className={classes.linkIcon} stroke={1.5} />
-      <span>{item.label}</span>
-    </a>
+    <>
+      <a
+        className={cx(classes.link,
+            {[classes.linkActive]: item.label === active})}
+        href={item.link}
+        key={item.label}
+        onClick={(event) => {
+          // event.preventDefault();
+          setActive(item.label);
+        } }
+      >
+        <item.icon className={classes.linkIcon} stroke={1.5} />
+        <span>{item.label}</span>
+      </a>
+    </>
   ));
+  // Logout and delete account handle
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  // eslint-disable-next-line max-len
+  const userId = useSelector((state) => state.currentUser ? state.currentUser._id : null);
+
+  const handleLogoutClick = () => {
+    console.log('Logout button clicked');
+    // 在这里添加你的注销逻辑
+    dispatch(logoutThunk())
+        .then(() => {
+          navigate('/login'); // 你的登录页面路由，这里假设它是/login
+        });
+  };
+
+  const handleDeleteAccountClick = () => {
+    console.log('Delete Account button clicked');
+    // 在这里添加你的删除帐户逻辑
+    // eslint-disable-next-line max-len
+    const confirmation = window.confirm('Are you sure you want to delete your account?');
+    if (confirmation) {
+      dispatch(deleteUserThunk(userId))
+          .then(() => {
+            navigate('/login'); // 你的登录页面路由，这里假设它是/login
+          });
+    }
+  };
 
   // const handleListItemClick = (event, index) => {
   //   setSelectedIndex(index);
@@ -126,16 +150,16 @@ const VerticalNavbar = () => {
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
-        <a href="#" className={classes.link}
-          onClick={(event) => event.preventDefault()}>
-          <IconSwitchHorizontal className={classes.linkIcon} stroke={1.5} />
-          <span>Change account</span>
+        <a href="/login" className={classes.link}
+          onClick={handleLogoutClick}>
+          <IconLogout className={classes.linkIcon} stroke={1.5} />
+          <span>Logout</span>
         </a>
 
         <a href="#" className={classes.link}
-          onClick={(event) => event.preventDefault()}>
-          <IconLogout className={classes.linkIcon} stroke={1.5} />
-          <span>Logout</span>
+          onClick={handleDeleteAccountClick}>
+          <IconTrash className={classes.linkIcon} stroke={1.5} />
+          <span>Delete Account</span>
         </a>
       </Navbar.Section>
     </Navbar>
