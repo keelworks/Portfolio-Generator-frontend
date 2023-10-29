@@ -1,24 +1,18 @@
 import React, {useState} from 'react';
-// import {List, ListItem, ListItemIcon, ListItemText, makeStyles}
-//   from '@material-ui/core';
-// import SettingsIcon from '@material-ui/icons/Settings';
-// import PersonIcon from '@material-ui/icons/Person';
-import {createStyles, Navbar,
-  Group, Code, getStylesRef, rem} from '@mantine/core';
+import {
+  createStyles, Navbar,
+  Group, Code, getStylesRef, rem, Button,
+} from '@mantine/core';
 import {
   IconWorldWww,
   IconTrash,
-  IconLayoutDashboard,
-  IconLogout,
+  IconLayoutDashboard, IconLogout,
+
 } from '@tabler/icons-react';
-// import {MantineLogo} from '@mantine/ds';
-// import {Link} from 'react-router-dom';
 import {logoutThunk, deleteUserThunk} from '../../services/authorize-thunk';
 import {useDispatch} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
-// import {Dashboard} from 'tabler-icons-react';
-// import dashBoard from '..';
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -135,62 +129,30 @@ const VerticalNavbar = () => {
     }
   };
 
-  // const handleListItemClick = (event, index) => {
-  //   setSelectedIndex(index);
-  // };
-
   return (
-    <Navbar width={{sm: 300}} p="md">
+    <Navbar p="md">
       <Navbar.Section grow>
         <Group className={classes.header} position="apart">
           {/* <MantineLogo size={28} />*/}
-          <Code sx={{fontWeight: 700}}>v3.1.2</Code>
+          <Code sx={{fontWeight: 700}}>keelworks</Code>
         </Group>
         {links}
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
-        <a href="/login" className={classes.link}
-          onClick={handleLogoutClick}>
+        <Button variant="contained" color="primary" onClick={handleLogoutClick}>
           <IconLogout className={classes.linkIcon} stroke={1.5} />
-          <span>Logout</span>
-        </a>
+          Logout
+        </Button>
 
-        <a href="#" className={classes.link}
+        <Button variant="contained" color="primary"
           onClick={handleDeleteAccountClick}>
           <IconTrash className={classes.linkIcon} stroke={1.5} />
-          <span>Delete Account</span>
-        </a>
+          Delete Account
+        </Button>
+
       </Navbar.Section>
     </Navbar>
-    // <div className={classes.root}>
-    //   <List component="nav" aria-label="main mailbox folders">
-    //     <ListItem
-    //       component={Link} to="/dashboard/profile"
-    //       button
-    //       selected={selectedIndex === 0}
-    //       onClick={(event) => handleListItemClick(event, 0)}
-    //       classes={{selected: classes.selected}}
-    //     >
-    //       <ListItemIcon>
-    //         <PersonIcon />
-    //       </ListItemIcon>
-    //       <ListItemText primary="profile" />
-    //     </ListItem>
-    //     <ListItem
-    //       component={Link} to="/dashboard/setting"
-    //       button
-    //       selected={selectedIndex === 1}
-    //       onClick={(event) => handleListItemClick(event, 1)}
-    //       classes={{selected: classes.selected}}
-    //     >
-    //       <ListItemIcon>
-    //         <SettingsIcon />
-    //       </ListItemIcon>
-    //       <ListItemText primary="Settings" />
-    //     </ListItem>
-    //   </List>
-    // </div>
   );
 };
 

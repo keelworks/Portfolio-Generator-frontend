@@ -49,8 +49,6 @@ function Login() {
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
-  // for password toggle purposes
-  // const [visible, setVisible]= useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
