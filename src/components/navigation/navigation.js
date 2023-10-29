@@ -130,7 +130,7 @@ const VerticalNavbar = () => {
   };
 
   return (
-    <Navbar p="md">
+    <Navbar p="md" >
       <Navbar.Section grow>
         <Group className={classes.header} position="apart">
           {/* <MantineLogo size={28} />*/}
