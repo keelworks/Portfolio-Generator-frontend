@@ -1,15 +1,22 @@
 import {useEffect, useState} from 'react';
-import {Link as RouterLink} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {loginThunk} from '../../services/authorize-thunk';
 import {useNavigate} from 'react-router-dom';
-import {Button, TextField, Link, Alert, Container, Typography, Box, Divider}
-  from '@mui/material';
-import {InputAdornment, IconButton} from '@mui/material';
 import keelworksLog from '../../icons/keelworksIcon.svg';
-import GoogleIcon from '@mui/icons-material/Google';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import {
+  TextInput,
+  PasswordInput,
+  Anchor,
+  Paper,
+  Text,
+  Button,
+  Alert,
+  Container,
+  Divider,
+  Group,
+} from '@mantine/core';
+import {BrandGoogle} from 'tabler-icons-react';
+import {IconAlertCircle} from '@tabler/icons-react';
 /**
  * Login.
  *
@@ -42,8 +49,6 @@ function Login() {
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
-  // for password toggle purposes
-  const [visible, setVisible]= useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -56,113 +61,47 @@ function Login() {
   };
 
   return (
-    <Container maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 0,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100%', // Height is set to 12/7
-          width: '100%', // Width is set to 100%
-        }}
-      >
-        <img src={keelworksLog} alt="Logo" style={{width: '70%'}} />
-        {error && <Alert severity="error">{error}</Alert>}
-        <Box component="form" onSubmit={handleSubmit}
-          noValidate sx={{
-            mt: 3,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%'}}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            autoComplete="username"
-            autoFocus
-            value={username}
-            onChange={handleUsernameChange}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type={!visible ? 'password': 'text'}
-            id="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={handlePasswordChange}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position='end'>
-                  <IconButton onClick={() => setVisible(!visible)}>
-                    {visible ? <VisibilityOffIcon/>: <RemoveRedEyeIcon/> }
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{mt: 3, mb: 3}}
-            fullWidth
-            style={{fontSize: '20px'}}
-          >
-                  Log In
-          </Button>
-          <Typography variant="body2"
-            style={{fontWeight: 'bold', marginBottom: '1rem'}}>
-            {'Don\'t have an account? '}
-            <Link component={RouterLink}
-              to="/signup"
-              style={{textDecoration: 'none', color: 'blue'}}>
-              Sign Up
-            </Link>
-          </Typography>
-          <Link component={RouterLink}
-            to="/forgot-password"
-            variant="body2"
-            style={{color: 'blue', textDecoration: 'none', fontWeight: 'bold'}}
-          >
-            Forgot password?
-          </Link>
-          <Box sx={{my: 2, width: '100%', textAlign: 'center'}}>
-            <Divider style={{backgroundColor: '#000'}} />
-            <Typography variant="caption" component="span"
-              sx={{position: 'relative',
-                top: '-15px',
-                background: '#fff',
-                padding: '0 10px',
-                fontSize: '15px',
-              }}>or
-            </Typography>
-          </Box>
+    <Container size={'xs'} p={60} my={32}
+      style={{justifyContent: 'center', alignItems: 'center'}}>
+      <div style={{display: 'flex',
+        justifyContent: 'center', marginBottom: '30px'}}>
+        <img src={keelworksLog} alt="Logo" style={{width: '70%'}}/>
+      </div>
 
-          <Button
-            variant="outlined"
-            fullWidth
-            startIcon={<GoogleIcon/>}
-            // style={{
-            //   borderColor: 'gray', // change the background color
-            //   color: 'gray', // change the text color
-            // }}
-          >
-            Continue with Google
-          </Button>
-        </Box>
-      </Box>
+      <Paper withBorder shadow="sm"
+        p={40} my={30} radius="md">
+        {error && <Alert icon={<IconAlertCircle size="1rem" />}
+          title="Bummer!" color="red">
+          {error}
+        </Alert>}
+        <TextInput label="Email" placeholder="you@mantine.dev" required
+          value={username}
+          onChange={handleUsernameChange}/>
+        <PasswordInput label="Password" mt={20}
+          placeholder="Your password" required value={password}
+          onChange={handlePasswordChange}/>
+        <Button fullWidth mt={40} type="submit" onClick={handleSubmit}>
+          log in
+        </Button>
+      </Paper>
+
+      <Text color="dimmed" size="sm" align="center" mt={5}>
+            Do not have an account yet?{' '}
+        <Anchor size="sm" onClick={() => navigate('/signup')}>
+          Create account
+        </Anchor>
+      </Text>
+      <Text color="dimmed" size="sm" align="center" mt={5}>
+        <Anchor component="button" size="sm">
+              Forgot password?
+        </Anchor>
+      </Text>
+      <Divider my="lg" label="or" labelPosition="center" />
+      <Group position="center">
+        <Button leftIcon={<BrandGoogle />} variant="white" align="center">
+          Connect to google
+        </Button>
+      </Group>
     </Container>
   );
 }
