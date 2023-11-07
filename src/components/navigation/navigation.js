@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   createStyles, Navbar,
-  Group, Code, getStylesRef, rem, Button,
+  Group, getStylesRef, rem, Button, Image,
 } from '@mantine/core';
 import {
   IconWorldWww,
@@ -13,6 +13,7 @@ import {logoutThunk, deleteUserThunk} from '../../services/authorize-thunk';
 import {useDispatch} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
+import keelworksLogo from '../../icons/keelworksIcon.svg';
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -53,7 +54,6 @@ const useStyles = createStyles((theme) => ({
       },
     },
   },
-
   linkIcon: {
     ref: getStylesRef('icon'),
     // eslint-disable-next-line max-len
@@ -82,6 +82,21 @@ const data = [
 const VerticalNavbar = () => {
   const {classes, cx} = useStyles();
   const [active, setActive] = useState('Dashboard');
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 800);
+
+  // Shows icon only when the winodw size is less then 800px
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 800);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
 
   const links = data.map((item) => (
     // eslint-disable-next-line react/react-in-jsx-scope
@@ -97,7 +112,8 @@ const VerticalNavbar = () => {
         } }
       >
         <item.icon className={classes.linkIcon} stroke={1.5} />
-        <span>{item.label}</span>
+        <span style={{display: isSmallScreen ? 'none' : 'inline'}}>
+          {item.label}</span>
       </a>
     </>
   ));
@@ -134,21 +150,24 @@ const VerticalNavbar = () => {
       <Navbar.Section grow>
         <Group className={classes.header} position="apart">
           {/* <MantineLogo size={28} />*/}
-          <Code sx={{fontWeight: 700}}>keelworks</Code>
+          <Image src ={keelworksLogo} size={28}/>
         </Group>
         {links}
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
-        <Button variant="contained" color="primary" onClick={handleLogoutClick}>
+        <Button variant="contained" color="primary"
+          onClick={handleLogoutClick}>
           <IconLogout className={classes.linkIcon} stroke={1.5} />
-          Logout
+          <span style={{display: isSmallScreen ? 'none' : 'inline'}}>
+            Logout</span>
         </Button>
 
         <Button variant="contained" color="primary"
           onClick={handleDeleteAccountClick}>
           <IconTrash className={classes.linkIcon} stroke={1.5} />
-          Delete Account
+          <span style={{display: isSmallScreen ? 'none' : 'inline'}}>
+          Delete Account</span>
         </Button>
 
       </Navbar.Section>
