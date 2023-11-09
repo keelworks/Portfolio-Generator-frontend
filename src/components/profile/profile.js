@@ -3,22 +3,24 @@ import {
 } from '@mantine/core';
 import {useForm} from '@mantine/form';
 import {Text} from '@mantine/core';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {updateUserThunk} from '../../services/authorize-thunk';
 
 const WelcomePage = () => {
   const user = useSelector((state) => state.currentUser);
+  const dispatch = useDispatch();
 
   const form = useForm({
     initialValues: {
       name: '',
       email: '',
-      subject: '',
+      lastName: '',
       message: '',
     },
     validate: {
       name: (value) => value.trim().length < 2,
       email: (value) => !/^\S+@\S+$/.test(value),
-      subject: (value) => value.trim().length === 0,
+      lastName: (value) => value.trim().length === 0,
     },
   });
 
@@ -37,10 +39,33 @@ const WelcomePage = () => {
     );
   }
 
+  const handleSubmit = async (values) => {
+    try {
+      // Prepare the data to be sent based on your API requirements
+      const userData = {
+        firstName: values.name,
+        email: values.email,
+        lastName: values.lastName,
+        message: values.message,
+      };
+      console.log(user._id);
+      // Dispatch an update action - replace with the actual thunk if different
+      const action = updateUserThunk({uid: user._id, userData});
+      const resultAction = await dispatch(action);
+      const updatedUser = resultAction.payload;
+
+      console.log('Update successful: ', updatedUser);
+      // Additional actions after successful update can go here
+    } catch (error) {
+      console.error('Update failed: ', error);
+      // Handle update error here
+    }
+  };
+
   // 如果用户存在，显示用户的名字
   return (
     <Container size="md" style={{marginTop: '2rem', marginBottom: '2rem'}}>
-      <form onSubmit={form.onSubmit(() => {})}>
+      <form onSubmit={form.onSubmit(handleSubmit)}>
         <Title
           order={2}
           size="h1"
@@ -71,12 +96,12 @@ const WelcomePage = () => {
         </Flex>
 
         <TextInput
-          label="Subject"
-          placeholder="Subject"
+          label="lastName"
+          placeholder={user.lastName}
           mt="md"
-          name="subject"
+          name="lastName"
           variant="filled"
-          {...form.getInputProps('subject')}
+          {...form.getInputProps('lastName')}
         />
         <Textarea
           mt="md"
@@ -92,7 +117,7 @@ const WelcomePage = () => {
 
         <Group justify="center" mt="xl">
           <Button type="submit" size="md">
-            Send message
+            Submit
           </Button>
         </Group>
       </form>
