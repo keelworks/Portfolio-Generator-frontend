@@ -55,6 +55,7 @@ const WelcomePage = () => {
 
       console.log('Update successful: ', updatedUser);
       // Additional actions after successful update can go here
+      alert('You already successfully saved!');
     } catch (error) {
       console.error('Update failed: ', error);
       // Handle update error here
