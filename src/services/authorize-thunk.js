@@ -30,3 +30,17 @@ export const deleteUserThunk = createAsyncThunk('users/deleteUser',
       return userId;
     },
 );
+
+export const updateUserThunk = createAsyncThunk('users/updateUser',
+    async ({uid, userData}, thunkAPI) => {
+      try {
+        const updatedUser = await userService.updateUser(uid, userData);
+        return updatedUser;
+      } catch (error) {
+      // Handle the error state
+        const errorMessage =
+        error.response ? error.response.data : error.message;
+        return thunkAPI.rejectWithValue(errorMessage);
+      }
+    },
+);

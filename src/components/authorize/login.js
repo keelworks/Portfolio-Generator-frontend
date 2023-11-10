@@ -74,7 +74,7 @@ function Login() {
           title="Bummer!" color="red">
           {error}
         </Alert>}
-        <TextInput label="Email" placeholder="you@mantine.dev" required
+        <TextInput label="Username" placeholder="you@mantine.dev" required
           value={username}
           onChange={handleUsernameChange}/>
         <PasswordInput label="Password" mt={20}

@@ -128,7 +128,7 @@ function Signup() {
                     required
                     fullWidth
                     id="email"
-                    label="Email Address"
+                    label="Email Address (Username)"
                     autoComplete="email"
                     placeholder="Email Address*"
                     value={email}

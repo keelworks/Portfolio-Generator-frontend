@@ -16,11 +16,6 @@ export const registerUser = async (userData) => {
   }
 };
 
-/**
- * Login.
- *
- * @return {any} - login
- */
 export const loginUser = async ({username, password}) => {
   try {
     const response = await api.post(`${API_BASE}/login`, {username, password});
@@ -42,4 +37,14 @@ export const logout = async () => {
 export const deleteUser = async (uid) => {
   const response = await api.delete(`${API_BASE}/${uid}`);
   return response.data;
+};
+
+export const updateUser = async (uid, userData) => {
+  try {
+    const response = await api.put(`${API_BASE}/${uid}`, userData);
+    return response.data;
+  } catch (error) {
+    console.error('Update failed:', error);
+    throw error;
+  }
 };
