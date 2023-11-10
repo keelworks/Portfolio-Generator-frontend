@@ -9,18 +9,17 @@ import {updateUserThunk} from '../../services/authorize-thunk';
 const WelcomePage = () => {
   const user = useSelector((state) => state.currentUser);
   const dispatch = useDispatch();
-
   const form = useForm({
     initialValues: {
-      name: '',
-      email: '',
-      lastName: '',
-      message: '',
+      firstname: user?.firstName || '',
+      lastName: user?.lastName || '',
+      email: user?.email || '',
+      bio: user?.bio || '',
     },
     validate: {
-      name: (value) => value.trim().length < 2,
-      email: (value) => !/^\S+@\S+$/.test(value),
+      firstname: (value) => value.trim().length < 2,
       lastName: (value) => value.trim().length === 0,
+      email: (value) => !/^\S+@\S+$/.test(value),
     },
   });
 
@@ -39,16 +38,16 @@ const WelcomePage = () => {
     );
   }
 
+
   const handleSubmit = async (values) => {
     try {
       // Prepare the data to be sent based on your API requirements
       const userData = {
-        firstName: values.name,
+        firstName: values.firstname,
         email: values.email,
         lastName: values.lastName,
-        message: values.message,
+        bio: values.bio,
       };
-      console.log(user._id);
       // Dispatch an update action - replace with the actual thunk if different
       const action = updateUserThunk({uid: user._id, userData});
       const resultAction = await dispatch(action);
@@ -78,41 +77,41 @@ const WelcomePage = () => {
 
         <Flex style={{marginTop: '1rem', gap: '1rem'}}>
           <TextInput
-            label="Name"
-            placeholder={user.firstName}
-            name="name"
+            label="FirstName"
+            name="firstname"
             variant="filled"
-            {...form.getInputProps('name')}
+            {...form.getInputProps('firstname')}
             style={{flex: 1}}
           />
+
           <TextInput
-            label="Email"
-            placeholder={user.username}
-            name="email"
+            label="LastName"
+
+            name="lastName"
             variant="filled"
-            {...form.getInputProps('email')}
+            {...form.getInputProps('lastName')}
             style={{flex: 1}}
           />
         </Flex>
 
         <TextInput
-          label="lastName"
-          placeholder={user.lastName}
+          label="Email"
           mt="md"
-          name="lastName"
+          name="email"
           variant="filled"
-          {...form.getInputProps('lastName')}
+          {...form.getInputProps('email')}
         />
+
         <Textarea
           mt="md"
-          label="Message"
+          label="bio"
           placeholder="Your message"
           maxRows={10}
           minRows={5}
           autosize
-          name="message"
+          name="bio"
           variant="filled"
-          {...form.getInputProps('message')}
+          {...form.getInputProps('bio')}
         />
 
         <Group justify="center" mt="xl">
