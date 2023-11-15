@@ -15,7 +15,7 @@ import {
   Divider,
   Group,
 } from '@mantine/core';
-import {BrandGoogle} from 'tabler-icons-react';
+// import {BrandGoogle} from 'tabler-icons-react';
 import {IconAlertCircle} from '@tabler/icons-react';
 /**
  * Login.
@@ -98,9 +98,9 @@ function Login() {
       </Text>
       <Divider my="lg" label="or" labelPosition="center" />
       <Group position="center">
-        <Button leftIcon={<BrandGoogle />} variant="white" align="center">
+        {/* <Button leftIcon={<BrandGoogle />} variant="white" align="center">
           Connect to google
-        </Button>
+        </Button> */}
       </Group>
     </Container>
   );
