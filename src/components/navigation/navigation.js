@@ -77,15 +77,17 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const data = [
-  {link: '#', label: 'Dashboard', icon: IconLayoutDashboard},
-  {link: '#', label: 'Website', icon: IconWorldWww},
-];
+
 const VerticalNavbar = () => {
   const {classes, cx} = useStyles();
   const [active, setActive] = useState('Dashboard');
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 920);
-
+  const user = useSelector((state) => state.currentUser);
+  const data = [
+    {link: '/dashboard/profile', label: 'Dashboard', icon: IconLayoutDashboard},
+    {link: user ? `/user/${user.firstName}` : '/user/default',
+      label: 'Website', icon: IconWorldWww},
+  ];
   // Shows icon only when the winodw size is less then 920px
   useEffect(() => {
     const handleResize = () => {

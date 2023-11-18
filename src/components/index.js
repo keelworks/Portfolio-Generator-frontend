@@ -15,7 +15,7 @@ function dashBoard() {
         style={{position: 'relative'}}>
         <Routes>
           <Route path='/' element={<ProfileComponent />} />
-          <Route path='profile' element={<ProfileComponent />} />
+          <Route path='/profile' element={<ProfileComponent />} />
         </Routes>
       </div>
     </div>

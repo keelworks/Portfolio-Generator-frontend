@@ -44,7 +44,7 @@ function Login() {
 
   useEffect(() => {
     if (user && user._id) {
-      navigate('/dashBoard');
+      navigate('/dashboard');
     } else if (user && user.error === 'User does not exist') {
       setError('user id or password does not match');
     }
