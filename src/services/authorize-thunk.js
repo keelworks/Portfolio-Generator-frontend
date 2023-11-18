@@ -3,7 +3,11 @@ import * as userService from './authorize-service';
 
 export const registerThunk = createAsyncThunk('users/register',
     async (user) => {
-      return await userService.registerUser(user);
+      try {
+        return await userService.registerUser(user);
+      } catch (error) {
+        throw error;
+      }
     });
 
 export const loginThunk = createAsyncThunk('users/login',

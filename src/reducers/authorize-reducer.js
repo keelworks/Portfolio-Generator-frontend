@@ -22,6 +22,9 @@ const authorizeSlice = createSlice({
         })
         .addCase(registerThunk.fulfilled, (state, {payload}) => {
         })
+        .addCase(registerThunk.rejected, (state, {payload}) => {
+          return null;
+        })
         .addCase(deleteUserThunk.fulfilled, (state) => {
           return null;
         })
