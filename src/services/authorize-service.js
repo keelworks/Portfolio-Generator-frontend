@@ -11,7 +11,10 @@ export const registerUser = async (userData) => {
     const response = await api.post(`${API_BASE}/register`, userData);
     return response.data;
   } catch (error) {
-    console.error('Registration failed:', error);
+    if (error.response && error.response.status === 400) {
+      throw new Error('User already exist');
+    }
+    // console.error('Registration failed:', error);
     throw error;
   }
 };
