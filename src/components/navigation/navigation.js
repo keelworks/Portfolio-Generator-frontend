@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {
   createStyles, Navbar,
-  Group, getStylesRef, rem, Button, Image,
+  Group, getStylesRef, rem, Image,
 } from '@mantine/core';
 import {
   IconWorldWww,
   IconTrash,
   IconLayoutDashboard, IconLogout,
-
 } from '@tabler/icons-react';
 import {logoutThunk, deleteUserThunk} from '../../services/authorize-thunk';
 import {useDispatch} from 'react-redux';
@@ -16,6 +15,7 @@ import {useSelector} from 'react-redux';
 import keelworksLogo from '../../icons/keelworksIcon.svg';
 
 const useStyles = createStyles((theme) => ({
+
   header: {
     paddingBottom: theme.spacing.md,
     marginBottom: `calc(${theme.spacing.md} * 1.5)`,
@@ -56,8 +56,10 @@ const useStyles = createStyles((theme) => ({
   },
   linkIcon: {
     ref: getStylesRef('icon'),
-    // eslint-disable-next-line max-len
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
+    minWidth: 24,
+    minHeight: 24,
+    color: theme.colorScheme === 'dark' ?
+      theme.colors.dark[2] : theme.colors.gray[6],
     marginRight: theme.spacing.sm,
   },
 
@@ -82,12 +84,12 @@ const data = [
 const VerticalNavbar = () => {
   const {classes, cx} = useStyles();
   const [active, setActive] = useState('Dashboard');
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 800);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 920);
 
-  // Shows icon only when the winodw size is less then 800px
+  // Shows icon only when the winodw size is less then 920px
   useEffect(() => {
     const handleResize = () => {
-      setIsSmallScreen(window.innerWidth <= 800);
+      setIsSmallScreen(window.innerWidth <= 920);
     };
 
     window.addEventListener('resize', handleResize);
@@ -99,23 +101,20 @@ const VerticalNavbar = () => {
 
 
   const links = data.map((item) => (
-    // eslint-disable-next-line react/react-in-jsx-scope
-    <>
-      <a
-        className={cx(classes.link,
-            {[classes.linkActive]: item.label === active})}
-        href={item.link}
-        key={item.label}
-        onClick={(event) => {
-          // event.preventDefault();
-          setActive(item.label);
-        } }
-      >
-        <item.icon className={classes.linkIcon} stroke={1.5} />
-        <span style={{display: isSmallScreen ? 'none' : 'inline'}}>
-          {item.label}</span>
-      </a>
-    </>
+    <a
+      className={cx(classes.link,
+          {[classes.linkActive]: item.label === active})}
+      href={item.link}
+      key={item.label}
+      onClick={(event) => {
+        // event.preventDefault();
+        setActive(item.label);
+      } }
+    >
+      <item.icon className={classes.linkIcon} stroke={1.5} />
+      <span style={{display: isSmallScreen ? 'none' : 'inline'}}>
+        {item.label}</span>
+    </a>
   ));
   // Logout and delete account handle
   const dispatch = useDispatch();
@@ -146,30 +145,32 @@ const VerticalNavbar = () => {
   };
 
   return (
-    <Navbar p="md" >
+    <Navbar p="md">
       <Navbar.Section grow>
         <Group className={classes.header} position="apart">
-          {/* <MantineLogo size={28} />*/}
           <Image src ={keelworksLogo} size={28}/>
         </Group>
         {links}
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
-        <Button variant="contained" color="primary"
+        <a href="#" className={classes.link}
           onClick={handleLogoutClick}>
           <IconLogout className={classes.linkIcon} stroke={1.5} />
+          {/* <span>Logout</span>*/}
           <span style={{display: isSmallScreen ? 'none' : 'inline'}}>
-            Logout</span>
-        </Button>
+            Logout
+          </span>
+        </a>
 
-        <Button variant="contained" color="primary"
+        <a href="#" className={classes.link}
           onClick={handleDeleteAccountClick}>
           <IconTrash className={classes.linkIcon} stroke={1.5} />
+          {/* <span>Delete account</span>*/}
           <span style={{display: isSmallScreen ? 'none' : 'inline'}}>
-          Delete Account</span>
-        </Button>
-
+            Delete account
+          </span>
+        </a>
       </Navbar.Section>
     </Navbar>
   );
