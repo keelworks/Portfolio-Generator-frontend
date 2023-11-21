@@ -15,6 +15,7 @@ const WelcomePage = () => {
       lastName: user?.lastName || '',
       email: user?.email || '',
       bio: user?.bio || '',
+      experience: user?.experience|| '',
     },
     validate: {
       firstname: (value) => value.trim().length < 2,
@@ -47,6 +48,7 @@ const WelcomePage = () => {
         email: values.email,
         lastName: values.lastName,
         bio: values.bio,
+        experience: values.experience,
       };
       // Dispatch an update action - replace with the actual thunk if different
       const action = updateUserThunk({uid: user._id, userData});
@@ -101,6 +103,13 @@ const WelcomePage = () => {
           name="email"
           variant="filled"
           {...form.getInputProps('email')}
+        />
+        <TextInput
+          label="Experience"
+          mt="md"
+          name="experience"
+          variant="filled"
+          {...form.getInputProps('experience')}
         />
 
         <Textarea
