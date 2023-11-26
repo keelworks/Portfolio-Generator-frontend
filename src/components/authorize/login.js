@@ -93,7 +93,7 @@ function Login() {
       </Text>
       {/* <Text color="dimmed" size="sm" align="center" mt={5}>
         <Anchor component="button" size="sm">
-              Forgot password?
+              Forgot password??
         </Anchor>
       </Text> */}
       <Divider my="lg" label="or" labelPosition="center" />
