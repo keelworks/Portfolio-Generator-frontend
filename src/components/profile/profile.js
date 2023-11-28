@@ -47,6 +47,7 @@ const WelcomePage = () => {
         email: values.email,
         lastName: values.lastName,
         bio: values.bio,
+        location: values.location,
       };
       // Dispatch an update action - replace with the actual thunk if different
       const action = updateUserThunk({uid: user._id, userData});
@@ -101,6 +102,14 @@ const WelcomePage = () => {
           name="email"
           variant="filled"
           {...form.getInputProps('email')}
+        />
+
+        <TextInput
+          label="Location"
+          mt="md"
+          name="location"
+          variant="filled"
+          {...form.getInputProps('location')}
         />
 
         <Textarea
