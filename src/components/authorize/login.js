@@ -12,7 +12,7 @@ import {
   Alert,
   Text,
   Anchor,
-  Divider,
+  // Divider,
   Group,
 } from '@mantine/core';
 // import {BrandGoogle} from 'tabler-icons-react';
@@ -108,12 +108,12 @@ function Login() {
           Create account
         </Anchor>
       </Text>
-      <Text color="dimmed" size="sm" align="center" mt={5}>
+      {/* <Text color="dimmed" size="sm" align="center" mt={5}>
         <Anchor component="button" size="sm">
           Forgot password?
         </Anchor>
-      </Text>
-      <Divider my="lg" label="or" labelPosition="center" />
+      </Text> */}
+      {/* <Divider my="lg" label="or" labelPosition="center" /> */}
       <Group position="center">
         {/* <Button leftIcon={<BrandGoogle />} variant="white" align="center">
           Connect to google
