@@ -5,6 +5,7 @@ import {useForm} from '@mantine/form';
 import {Text} from '@mantine/core';
 import {useDispatch, useSelector} from 'react-redux';
 import {updateUserThunk} from '../../services/authorize-thunk';
+import {IconBrandLinkedin} from '@tabler/icons-react';
 
 const WelcomePage = () => {
   const user = useSelector((state) => state.currentUser);
@@ -15,6 +16,9 @@ const WelcomePage = () => {
       lastName: user?.lastName || '',
       email: user?.email || '',
       bio: user?.bio || '',
+      experience: user?.experience|| '',
+      location: user?.location || '',
+      linkedin: user?.linkedin || '',
     },
     validate: {
       firstname: (value) => value.trim().length < 2,
@@ -47,6 +51,9 @@ const WelcomePage = () => {
         email: values.email,
         lastName: values.lastName,
         bio: values.bio,
+        experience: values.experience,
+        location: values.location,
+        linkedin: values.linkedin,
       };
       // Dispatch an update action - replace with the actual thunk if different
       const action = updateUserThunk({uid: user._id, userData});
@@ -61,6 +68,8 @@ const WelcomePage = () => {
       // Handle update error here
     }
   };
+  // const linkedinicon=<IconBrandLinkedin style={{width: rem(16),
+  //   height: rem(16)}} />;
 
   // 如果用户存在，显示用户的名字
   return (
@@ -94,13 +103,39 @@ const WelcomePage = () => {
             style={{flex: 1}}
           />
         </Flex>
-
         <TextInput
           label="Email"
           mt="md"
           name="email"
           variant="filled"
           {...form.getInputProps('email')}
+        />
+        <Flex style={{marginTop: '1rem', gap: '1rem'}}>
+          <TextInput
+            label="Experience"
+            mt="md"
+            name="experience"
+            variant="filled"
+            {...form.getInputProps('experience')}
+            style={{flex: 1}}
+          />
+
+          <TextInput
+            label="Location"
+            mt="md"
+            name="location"
+            variant="filled"
+            {...form.getInputProps('location')}
+            style={{flex: 1}}
+          />
+        </Flex>
+        <TextInput
+          label="LinkedIn Profile URL"
+          icon={<IconBrandLinkedin/>}
+          mt="md"
+          name="linkedin"
+          variant="filled"
+          {...form.getInputProps('linkedin')}
         />
 
         <Textarea
