@@ -1,10 +1,11 @@
 import {
-  TextInput, Textarea, Group, Title, Button, Container, Flex,
+  TextInput, Textarea, Group, Title, Button, Container, Flex, NativeSelect,
 } from '@mantine/core';
 import {useForm} from '@mantine/form';
 import {Text} from '@mantine/core';
 import {useDispatch, useSelector} from 'react-redux';
 import {updateUserThunk} from '../../services/authorize-thunk';
+import {IconBrandLinkedin} from '@tabler/icons-react';
 
 const WelcomePage = () => {
   const user = useSelector((state) => state.currentUser);
@@ -14,7 +15,11 @@ const WelcomePage = () => {
       firstname: user?.firstName || '',
       lastName: user?.lastName || '',
       email: user?.email || '',
+      profession: user?.profession || '',
       bio: user?.bio || '',
+      experience: user?.experience|| '',
+      location: user?.location || '',
+      linkedin: user?.linkedin || '',
     },
     validate: {
       firstname: (value) => value.trim().length < 2,
@@ -44,9 +49,13 @@ const WelcomePage = () => {
       // Prepare the data to be sent based on your API requirements
       const userData = {
         firstName: values.firstname,
-        email: values.email,
         lastName: values.lastName,
+        email: values.email,
+        profession: values.profession,
         bio: values.bio,
+        experience: values.experience,
+        location: values.location,
+        linkedin: values.linkedin,
       };
       // Dispatch an update action - replace with the actual thunk if different
       const action = updateUserThunk({uid: user._id, userData});
@@ -61,6 +70,8 @@ const WelcomePage = () => {
       // Handle update error here
     }
   };
+  // const linkedinicon=<IconBrandLinkedin style={{width: rem(16),
+  //   height: rem(16)}} />;
 
   // 如果用户存在，显示用户的名字
   return (
@@ -94,13 +105,50 @@ const WelcomePage = () => {
             style={{flex: 1}}
           />
         </Flex>
+        <Flex style={{marginTop: '1rem', gap: '1rem'}}>
+          <TextInput
+            label="Email"
+            name="email"
+            variant="filled"
+            {...form.getInputProps('email')}
+            style={{flex: 1}}
+          />
+          <NativeSelect
+            label="Profession"
+            name="profession"
+            variant="filled"
+            {...form.getInputProps('profession')}
+            data={
+              ['Instructional Designer', 'UI/UX Designer', 'Graphics Designer']
+            }
+            style={{flex: 1}}
+          />
+        </Flex>
 
+        <Flex style={{marginTop: '1rem', gap: '1rem'}}>
+          <TextInput
+            label="Experience"
+            name="experience"
+            variant="filled"
+            {...form.getInputProps('experience')}
+            style={{flex: 1}}
+          />
+
+          <TextInput
+            label="Location"
+            name="location"
+            variant="filled"
+            {...form.getInputProps('location')}
+            style={{flex: 1}}
+          />
+        </Flex>
         <TextInput
-          label="Email"
+          label="LinkedIn Profile URL"
+          icon={<IconBrandLinkedin/>}
           mt="md"
-          name="email"
+          name="linkedin"
           variant="filled"
-          {...form.getInputProps('email')}
+          {...form.getInputProps('linkedin')}
         />
 
         <Textarea

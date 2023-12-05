@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client'; // 修改引入路径
 import {Provider} from 'react-redux';
 import store from './store';
 import {
@@ -16,7 +16,8 @@ import UserPage from './components/profile/UserPage';
 import FourZeroFourPage from './components/FourZeroFourPage';
 import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
     <React.StrictMode>
       <Provider store={store}>
         <Router>
@@ -26,15 +27,14 @@ ReactDOM.render(
             <Route path="/dashboard/*" element={<DashBoard/>} />
             <Route path="/user/:firstname" element={<UserPage/>} />
             <Route path="/user/default" element={<FourZeroFourPage/>} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/dashBoard/*" element={<DashBoard />} />
             <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         </Router>
       </Provider>
     </React.StrictMode>,
-    document.getElementById('root'),
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
