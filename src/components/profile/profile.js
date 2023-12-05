@@ -1,5 +1,5 @@
 import {
-  TextInput, Textarea, Group, Title, Button, Container, Flex,
+  TextInput, Textarea, Group, Title, Button, Container, Flex, NativeSelect,
 } from '@mantine/core';
 import {useForm} from '@mantine/form';
 import {Text} from '@mantine/core';
@@ -15,6 +15,7 @@ const WelcomePage = () => {
       firstname: user?.firstName || '',
       lastName: user?.lastName || '',
       email: user?.email || '',
+      profession: user?.profession || '',
       bio: user?.bio || '',
       experience: user?.experience|| '',
       location: user?.location || '',
@@ -48,8 +49,9 @@ const WelcomePage = () => {
       // Prepare the data to be sent based on your API requirements
       const userData = {
         firstName: values.firstname,
-        email: values.email,
         lastName: values.lastName,
+        email: values.email,
+        profession: values.profession,
         bio: values.bio,
         experience: values.experience,
         location: values.location,
@@ -103,17 +105,29 @@ const WelcomePage = () => {
             style={{flex: 1}}
           />
         </Flex>
-        <TextInput
-          label="Email"
-          mt="md"
-          name="email"
-          variant="filled"
-          {...form.getInputProps('email')}
-        />
+        <Flex style={{marginTop: '1rem', gap: '1rem'}}>
+          <TextInput
+            label="Email"
+            name="email"
+            variant="filled"
+            {...form.getInputProps('email')}
+            style={{flex: 1}}
+          />
+          <NativeSelect
+            label="Profession"
+            name="profession"
+            variant="filled"
+            {...form.getInputProps('profession')}
+            data={
+              ['Instructional Designer', 'UI/UX Designer', 'Graphics Designer']
+            }
+            style={{flex: 1}}
+          />
+        </Flex>
+
         <Flex style={{marginTop: '1rem', gap: '1rem'}}>
           <TextInput
             label="Experience"
-            mt="md"
             name="experience"
             variant="filled"
             {...form.getInputProps('experience')}
@@ -122,7 +136,6 @@ const WelcomePage = () => {
 
           <TextInput
             label="Location"
-            mt="md"
             name="location"
             variant="filled"
             {...form.getInputProps('location')}
