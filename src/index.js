@@ -25,7 +25,7 @@ root.render(
             <Route path="/login" element={<Login/>} />
             <Route path="/signup" element={<Signup/>} />
             <Route path="/dashboard/*" element={<DashBoard/>} />
-            <Route path="/user/:firstname" element={<UserPage/>} />
+            <Route path="/user/:userId" element={<UserPage/>} />
             <Route path="/user/default" element={<FourZeroFourPage/>} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
