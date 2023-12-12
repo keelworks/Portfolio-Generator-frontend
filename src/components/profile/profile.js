@@ -126,11 +126,14 @@ const WelcomePage = () => {
         </Flex>
 
         <Flex style={{marginTop: '1rem', gap: '1rem'}}>
-          <TextInput
+          <NativeSelect
             label="Experience"
             name="experience"
             variant="filled"
             {...form.getInputProps('experience')}
+            data={
+              ['0-1 years', '1-3 years', '3-5 years', '5-10 years', '10+ years']
+            }
             style={{flex: 1}}
           />
 
