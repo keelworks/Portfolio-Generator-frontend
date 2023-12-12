@@ -8,7 +8,7 @@ import {
   Flex,
   NativeSelect,
   Avatar,
-  FileInput,
+  FileInput, Modal,
 } from '@mantine/core';
 import {useForm} from '@mantine/form';
 import {Text} from '@mantine/core';
@@ -17,11 +17,12 @@ import {updateUserThunk} from '../../services/authorize-thunk';
 import {IconBrandLinkedin, IconFileCv} from '@tabler/icons-react';
 import firebase from '../../firebaseConfig';
 import {getStorage, ref, uploadBytes, getDownloadURL} from 'firebase/storage';
-import {useState} from 'react';
+import React, {useState} from 'react';
 
 const WelcomePage = () => {
   const [avatar, setAvatar] = useState(null);
   const [resume, setResume] = useState(null);
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
   const user = useSelector((state) => state.currentUser);
   const dispatch = useDispatch();
   const handleAvatarChange = (e) => {
@@ -29,6 +30,11 @@ const WelcomePage = () => {
   };
   const handleResumeChange = (e) => {
     setResume(e);
+  };
+
+  const handleAvatarClick = () => {
+    console.log('clicked the avatar');
+    setIsViewerOpen(true);
   };
 
   const uploadAvatar = async () => {
@@ -113,6 +119,10 @@ const WelcomePage = () => {
   };
   return (
     <Container size="md" style={{marginTop: '2rem', marginBottom: '2rem'}}>
+      <Modal opened={isViewerOpen}
+        onClose={() => setIsViewerOpen(false)} >
+        <img src={form.values.avatarUrl} alt="Avatar" style={{width: '100%'}}/>
+      </Modal>
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Title
           order={2}
@@ -131,6 +141,7 @@ const WelcomePage = () => {
               size="lg"
               radius="sm"
               style={{cursor: 'pointer', height: '100%'}}
+              onClick={handleAvatarClick}
             />
             <FileInput
               clearable
