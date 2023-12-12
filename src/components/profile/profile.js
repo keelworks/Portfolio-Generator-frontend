@@ -1,17 +1,56 @@
 import {
-  TextInput, Textarea, Group, Title, Button, Container, Flex, NativeSelect,
+  TextInput,
+  Textarea,
+  Group,
+  Title,
+  Button,
+  Container,
+  Flex,
+  NativeSelect,
+  Avatar,
+  FileInput,
 } from '@mantine/core';
 import {useForm} from '@mantine/form';
 import {Text} from '@mantine/core';
 import {useDispatch, useSelector} from 'react-redux';
 import {updateUserThunk} from '../../services/authorize-thunk';
-import {IconBrandLinkedin} from '@tabler/icons-react';
+import {IconBrandLinkedin, IconFileCv} from '@tabler/icons-react';
+import firebase from '../../firebaseConfig';
+import {getStorage, ref, uploadBytes, getDownloadURL} from 'firebase/storage';
+import {useState} from 'react';
 
 const WelcomePage = () => {
+  const [avatar, setAvatar] = useState(null);
+  const [resume, setResume] = useState(null);
   const user = useSelector((state) => state.currentUser);
   const dispatch = useDispatch();
+  const handleAvatarChange = (e) => {
+    setAvatar(e);
+  };
+  const handleResumeChange = (e) => {
+    setResume(e);
+  };
+
+  const uploadAvatar = async () => {
+    if (!avatar) return user.avatarUrl;
+    const storage = getStorage(firebase);
+    const storageRef = ref(storage, 'avatars/' + avatar.name);
+    await uploadBytes(storageRef, avatar);
+    return getDownloadURL(storageRef);
+  };
+
+  const uploadResume = async () => {
+    if (!resume) return user.resumeUrl;
+    const storage = getStorage(firebase);
+    const storageRef = ref(storage, 'resume/' + resume.name);
+    await uploadBytes(storageRef, resume);
+    return getDownloadURL(storageRef);
+  };
+
   const form = useForm({
     initialValues: {
+      avatarUrl: user?.avatarUrl || 'https://firebasestorage.googleapis.com/v0/b/portfolio-generator-394004.appspot.com/o/avatars%2Fcxk.jpg?alt=media&token=29c9ba5e-ea2a-4c76-9e15-4ba58ff13c69',
+      resumeUrl: user?.resumeUrl || '',
       firstname: user?.firstName || '',
       lastName: user?.lastName || '',
       email: user?.email || '',
@@ -42,10 +81,10 @@ const WelcomePage = () => {
       </div>
     );
   }
-
-
   const handleSubmit = async (values) => {
     try {
+      const avatarUrl = await uploadAvatar();
+      const resumeUrl = await uploadResume();
       // Prepare the data to be sent based on your API requirements
       const userData = {
         firstName: values.firstname,
@@ -56,6 +95,8 @@ const WelcomePage = () => {
         experience: values.experience,
         location: values.location,
         linkedin: values.linkedin,
+        avatarUrl: avatarUrl,
+        resumeUrl: resumeUrl,
       };
       // Dispatch an update action - replace with the actual thunk if different
       const action = updateUserThunk({uid: user._id, userData});
@@ -70,10 +111,6 @@ const WelcomePage = () => {
       // Handle update error here
     }
   };
-  // const linkedinicon=<IconBrandLinkedin style={{width: rem(16),
-  //   height: rem(16)}} />;
-
-  // 如果用户存在，显示用户的名字
   return (
     <Container size="md" style={{marginTop: '2rem', marginBottom: '2rem'}}>
       <form onSubmit={form.onSubmit(handleSubmit)}>
@@ -88,6 +125,36 @@ const WelcomePage = () => {
         </Title>
 
         <Flex style={{marginTop: '1rem', gap: '1rem'}}>
+          <Flex style={{flex: 1, alignItems: 'center', gap: '1rem'}}>
+            <Avatar
+              src={form.values.avatarUrl}
+              size="lg"
+              radius="sm"
+              style={{cursor: 'pointer', height: '100%'}}
+            />
+            <FileInput
+              clearable
+              variant="filled"
+              label="Change new photo"
+              placeholder=".jpg .Png are acceptable"
+              accept="image/*"
+              onChange={handleAvatarChange}
+              style={{flex: 1}}
+            />
+          </Flex>
+          <FileInput
+            icon={<IconFileCv/>}
+            clearable
+            variant="filled"
+            label="Attach your CV"
+            placeholder="only .PDF acceptable"
+            accept=".pdf"
+            leftSectionPointerEvents="none"
+            onChange={handleResumeChange}
+            style={{flex: 1}}
+          />
+        </Flex>
+        <Flex style={{marginTop: '1rem', gap: '1rem'}}>
           <TextInput
             label="FirstName"
             name="firstname"
@@ -98,7 +165,6 @@ const WelcomePage = () => {
 
           <TextInput
             label="LastName"
-
             name="lastName"
             variant="filled"
             {...form.getInputProps('lastName')}
