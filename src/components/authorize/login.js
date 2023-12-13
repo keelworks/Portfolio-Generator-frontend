@@ -44,6 +44,7 @@ function Login() {
 
   useEffect(() => {
     if (user && user._id) {
+      localStorage.setItem('currentUser', JSON.stringify(user));
       navigate('/dashBoard');
     } else if (user && user.error === 'User does not exist') {
       setError('user id or password does not match');
