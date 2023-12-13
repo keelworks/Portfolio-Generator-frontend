@@ -7,10 +7,12 @@ const savedCurrentUser = localStorage.getItem('currentUser');
 const preloadedState = {
   currentUser: savedCurrentUser ? JSON.parse(savedCurrentUser) : null,
 };
+import userByIdReducer from './reducers/website-reducer';
 
 const store = configureStore({
   reducer: {
     currentUser: authorizeReducer,
+    userById: userByIdReducer,
   },
   preloadedState,
   // eslint-disable-next-line max-len
