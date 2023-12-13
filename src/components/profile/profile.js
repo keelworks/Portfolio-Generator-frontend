@@ -33,7 +33,6 @@ const WelcomePage = () => {
   };
 
   const handleAvatarClick = () => {
-    console.log('clicked the avatar');
     setIsViewerOpen(true);
   };
 
@@ -91,7 +90,6 @@ const WelcomePage = () => {
     try {
       const avatarUrl = await uploadAvatar();
       const resumeUrl = await uploadResume();
-      // Prepare the data to be sent based on your API requirements
       const userData = {
         firstName: values.firstname,
         lastName: values.lastName,
@@ -160,7 +158,6 @@ const WelcomePage = () => {
             label="Attach your CV"
             placeholder="only .PDF acceptable"
             accept=".pdf"
-            leftSectionPointerEvents="none"
             onChange={handleResumeChange}
             style={{flex: 1}}
           />

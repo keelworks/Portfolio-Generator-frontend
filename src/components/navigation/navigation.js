@@ -129,6 +129,7 @@ const VerticalNavbar = () => {
     // 在这里添加你的注销逻辑
     dispatch(logoutThunk())
         .then(() => {
+          localStorage.removeItem('currentUser');
           navigate('/login'); // 你的登录页面路由，这里假设它是/login
         });
   };
