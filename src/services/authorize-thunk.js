@@ -38,8 +38,7 @@ export const deleteUserThunk = createAsyncThunk('users/deleteUser',
 export const updateUserThunk = createAsyncThunk('users/updateUser',
     async ({uid, userData}, thunkAPI) => {
       try {
-        const updatedUser = await userService.updateUser(uid, userData);
-        return updatedUser;
+        return await userService.updateUser(uid, userData);
       } catch (error) {
       // Handle the error state
         const errorMessage =
