@@ -146,6 +146,9 @@ function Signup() {
                 </Grid.Col>
               </Grid>
               <Button type="submit" style={{width: '100%'}}>Sign Up</Button>
+              <Button style={{marginTop: '8px', width: '100%'}}
+                onClick={() => navigate('/login')}>Back to Log In
+              </Button>
             </form>
           </Paper>
         </Box>
