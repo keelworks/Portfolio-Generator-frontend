@@ -71,7 +71,12 @@ const WelcomePage = () => {
       email: (value) => !/^\S+@\S+$/.test(value),
     },
   });
-
+  // Extract the file name from the URL
+  const fileNameWith = form.values.resumeUrl ? form.values.resumeUrl.
+      split('/').pop().split('?')[0] : '';
+  // console.log('Before url: ', fileNameWith);
+  const fileName = decodeURIComponent(fileNameWith).split('/').pop();
+  console.log('from url: ', fileName);
   if (!user) {
     return (
       <div style={{
@@ -106,7 +111,6 @@ const WelcomePage = () => {
       const action = updateUserThunk({uid: user._id, userData});
       const resultAction = await dispatch(action);
       const updatedUser = resultAction.payload;
-
       console.log('Update successful: ', updatedUser);
       // Additional actions after successful update can go here
       alert('You already successfully saved!');
@@ -150,17 +154,22 @@ const WelcomePage = () => {
               onChange={handleAvatarChange}
               style={{flex: 1}}
             />
+            <FileInput
+              icon={<IconFileCv/>}
+              clearable
+              variant="filled"
+              label="Attach your CV"
+              // placeholder="only .PDF acceptable"
+              accept=".pdf"
+              placeholder={form.values.resumeUrl? fileName:
+              'Attach your resume: only .PDF acceptable'}
+              onChange={handleResumeChange}
+              // {...form.getInputProps('resumeUrl')}
+              // {...console.log(form.values.resumeUrl)}
+              style={{flex: 1, color: 'red'}}
+            >
+            </FileInput>
           </Flex>
-          <FileInput
-            icon={<IconFileCv/>}
-            clearable
-            variant="filled"
-            label="Attach your CV"
-            placeholder="only .PDF acceptable"
-            accept=".pdf"
-            onChange={handleResumeChange}
-            style={{flex: 1}}
-          />
         </Flex>
         <Flex style={{marginTop: '1rem', gap: '1rem'}}>
           <TextInput
