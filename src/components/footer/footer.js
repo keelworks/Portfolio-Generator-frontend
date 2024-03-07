@@ -19,7 +19,7 @@ const Footer = ({ firstName, lastName }) => {
               GitHub
           </Anchor>
         </Group>
-        <Text size="sm" style={{ marginTop: '1em' }}>&copy; {new Date().getFullYear()} {firstName} {lastName}</Text>
+        <Text size="sm" style={{ marginTop: '1em' }}>&copy;{firstName}{lastName}{new Date().getFullYear()}</Text>
       </Container>
     </MantineFooter>
   );
