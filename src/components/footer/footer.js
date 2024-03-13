@@ -6,8 +6,8 @@ import { Footer as MantineFooter, Text, Anchor, Group, Container } from '@mantin
 const Footer = ({ firstName, lastName }) => {
   return (
     <MantineFooter p="md" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '6vh' }}>
-      <Container style={{ maxWidth: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <Group position="apart" style={{ width: '100vw', justifyContent: 'space-around' }}>
+      <Container style={{ maxWidth: '1400px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Group position="apart" style={{ width: '100vw', justifyContent: 'space-around', maxWidth: '1400px', padding: '10px'}}>
           <Anchor href="https://linkedin.com/in/johndoe" size="sm" target="_blank" rel="noopener noreferrer">
               LinkedIn
           </Anchor>
