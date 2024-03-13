@@ -6,6 +6,8 @@ import {
   Container, Flex,
   Text, Image, Button,
 } from '@mantine/core';
+import UserProfileHeader from '../header/header';
+import Footer from '../footer/footer';
 
 // eslint-disable-next-line require-jsdoc
 function UserPage() {
@@ -29,45 +31,49 @@ function UserPage() {
   }
 
   return (
-    <Container size={'responsive'}
-      style={{justifyContent: 'center', alignItems: 'center',
-        width: '100vw', height: '100vh', display: 'flex',
-        flexDirection: 'column'}}>
-      <Text color="black" size="xl" align="center">
-        {`${user.firstName.toUpperCase()}'S PORTFOLIO`}
-      </Text>
-      <Flex style={{marginTop: '1rem', gap: '1rem', height: 'auto'}}>
-        <Container size={'responsive'}
-          style={{flex: 1, display: 'flex', flexDirection: 'column',
-            alignItems: 'center', justifyContent: 'center'}}
-        >
-          <Image
-            radius="md"
-            fit="contain"
-            src={user.avatarUrl}
-            style={{width: '200px', height: '200px'}}
-          />
-        </Container>
-        <Container size={'responsive'}
-          style={{flex: 1, display: 'flex', flexDirection: 'column',
-            alignItems: 'center', justifyContent: 'center'}}
-        >
-          <Text color="black" size="xl" align="center">
-            Hi,my name is
-          </Text>
-          <Text color="black" size="xl" align="center" fw={700}>
-            {`${user.firstName} ${user.lastName} `}
-          </Text>
-          <Text color="black" size="xl" align="center">
-            {`And I am a ${user.profession}`}
-          </Text>
-          <Button component="a" href={user.resumeUrl}
-            target="_blank" rel="noopener noreferrer">
-            Download resume
-          </Button>
-        </Container>
-      </Flex>
-    </Container>
+    <>
+      <UserProfileHeader firstName={user.firstName} resumeUrl={user.resumeUrl} />
+      <Container size={'responsive'}
+        style={{justifyContent: 'center', alignItems: 'center',
+          width: '100vw', height: '100vh', display: 'flex',
+          flexDirection: 'column'}}>
+        <Text color="black" size="xl" align="center">
+          {`${user.firstName.toUpperCase()}'S PORTFOLIO`}
+        </Text>
+        <Flex style={{marginTop: '1rem', gap: '1rem', height: 'auto'}}>
+          <Container size={'responsive'}
+            style={{flex: 1, display: 'flex', flexDirection: 'column',
+              alignItems: 'center', justifyContent: 'center'}}
+          >
+            <Image
+              radius="md"
+              fit="contain"
+              src={user.avatarUrl}
+              style={{width: '200px', height: '200px'}}
+            />
+          </Container>
+          <Container size={'responsive'}
+            style={{flex: 1, display: 'flex', flexDirection: 'column',
+              alignItems: 'center', justifyContent: 'center'}}
+          >
+            <Text color="black" size="xl" align="center">
+              Hi,my name is
+            </Text>
+            <Text color="black" size="xl" align="center" fw={700}>
+              {`${user.firstName} ${user.lastName} `}
+            </Text>
+            <Text color="black" size="xl" align="center">
+              {`And I am a ${user.profession}`}
+            </Text>
+            <Button component="a" href={user.resumeUrl}
+              target="_blank" rel="noopener noreferrer">
+              Download resume
+            </Button>
+          </Container>
+        </Flex>
+      </Container>
+      <Footer firstName={user.firstName} lastName={user.lastName}/>
+    </>
   );
 }
 

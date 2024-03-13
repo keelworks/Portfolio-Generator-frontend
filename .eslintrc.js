@@ -33,5 +33,8 @@ module.exports = {
       'error',
       process.platform === 'win32' ? 'windows' : 'unix',
     ],
+    'indent': 'off',
+    'object-curly-spacing': 'off',
+    'max-len': 'off',
   },
 };
