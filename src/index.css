@@ -11,3 +11,176 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.slick-list {
+  margin:auto;
+}
+/* container-userPage */
+.container-userPage {
+  background: url(https://media.istockphoto.com/id/1027112894/photo/gray-wall-background.webp?b=1&s=170667a&w=0&k=20&c=81bX_tPIn9F3fYo8nNiDWMlndItJkowD4LoOIu7rcxw=) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+/* landing boxes */
+
+.container-userProfile {
+  display: flex;
+  flex-direction: row;
+  background: inherit; /* Adjust to match the background color */
+  padding: 50px 20px;
+}
+
+@media screen and (max-height: 600px) {
+  .container-userProfile {
+    display: block;
+    flex-direction: col;
+    background: inherit; /* Adjust to match the background color */
+    padding: 50px 20px;
+  }
+}
+
+.profile {
+  flex: 1;
+  padding: 20px;
+  width: 350px;
+  height: auto;
+}
+
+.profile-image {
+  width: 100%; /* Adjust as needed */
+  border-radius: 5%;
+  border: 2px solid black;
+}
+
+.content {
+  flex: 2;
+  padding: 20px;
+}
+
+@media screen and (max-height: 800px) {
+  .content {
+    flex: 1;
+    padding: 20px;
+  }
+}
+
+
+.section {
+  background: white;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid black;
+}
+
+.section h1 {
+  margin-bottom: 10px;
+  border-bottom: 2px solid black;
+  padding-bottom: 5px;
+}
+
+.section p {
+  font-size: 16px;
+}
+
+/* You will need to add media queries to handle responsiveness and more styles to match the design exactly */
+
+
+/* center cards */
+
+
+/* ProjectModal.css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 5px;
+  max-width: 1000px;
+  max-height: 990px;
+  overflow-y: auto;
+  /* border: 2px solid white; */
+
+}
+@media screen and (max-height: 1200px) {
+  .modal-content {
+    transform: scale(0.8);
+  }
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: flex-start;
+  width: 100%;
+  color: white;
+  padding: 10px 0;
+}
+
+.styled-modal-image {
+  width: 100%;
+  max-height: 600px;
+  border-radius: 10px;
+}
+
+.styled-modal-coursal {
+  width: 212px;
+  max-height: 184px;
+  border-radius: 10px;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.title {
+  margin: 10px;
+}
+
+.description {
+  margin: 10px;
+}
+
+
+
+.image-gallery .image-container {
+  position: relative;
+  overflow: hidden;
+}
+.image-gallery .image-container:hover .image-title {
+  visibility: visible;
+  opacity: 1;
+}
+.image-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-size: 18px;
+  padding: 10px;
+  border-radius: 5px;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.3s linear;
+  z-index: 1; /* Ensure the text is above the image */
+}
