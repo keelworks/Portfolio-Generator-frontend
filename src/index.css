@@ -109,8 +109,8 @@ code {
 .modal-content {
   background-color: rgba(0, 0, 0, 0);
   border-radius: 5px;
-  max-width: 1000px;
-  max-height: 990px;
+  /* max-width: 1100px;
+  max-height: 9100px; */
   overflow-y: auto;
   /* border: 2px solid white; */
 
@@ -119,6 +119,23 @@ code {
   .modal-content {
     transform: scale(0.8);
   }
+}
+
+.close-button {
+  display: inline-flex;
+  justify-content: flex-end;
+  position: relative;
+  top: 1vw;
+  right: 7vw;
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  color: white;
+}
+
+.close-button:hover {
+  color: red;
 }
 
 .flex-container {
@@ -157,7 +174,7 @@ code {
 
 
 
-.image-gallery .image-container {
+/* .image-gallery .image-container {
   position: relative;
   overflow: hidden;
 }
@@ -165,6 +182,17 @@ code {
   visibility: visible;
   opacity: 1;
 }
+
+.image-gallery-main{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-container{
+  border-radius: 10px;
+} */
+
 .image-title {
   position: absolute;
   top: 0;
@@ -182,5 +210,54 @@ code {
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s, opacity 0.3s linear;
-  z-index: 1; /* Ensure the text is above the image */
+  z-index: 1; 
+ }  
+
+
+/* modal */
+
+
+.image-gallery-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: .5vw;
 }
+
+.image-gallery {
+  display: flex;
+  overflow-x: auto;
+  justify-content: space-between;
+  width: 95vw; /* Adjusted to a relative width */
+  padding: 0 5vw; /* Added padding for spacing */
+}
+
+.image-item {
+  flex: 0 0 auto;
+  margin-right: 1vw; /* Adjusted to a relative unit */
+}
+
+.image-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem; /* Adjusted to a relative unit */
+  width: 20vw; /* Relative width for the image container */
+  height: 12vw; /* Relative height for the image container to maintain a rectangular shape */
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  /* max-height: 30vh;  */
+  object-fit: cover; /* Ensures the image covers the container while maintaining its aspect ratio */
+
+}
+
+
+
+.image-container:hover .image-title {
+  visibility: visible;
+  opacity: 1;
+}
+

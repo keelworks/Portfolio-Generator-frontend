@@ -2,6 +2,7 @@ import React from 'react';
 import NavigationSidebar from './navigation/navigation';
 import {Routes, Route} from 'react-router';
 import ProfileComponent from './profile/profile';
+import UserProfileDetails from './profile/UserProfileDetails';
 
 // eslint-disable-next-line require-jsdoc
 function dashBoard() {
@@ -16,6 +17,7 @@ function dashBoard() {
         <Routes>
           <Route path='/' element={<ProfileComponent />} />
           <Route path='/profile' element={<ProfileComponent />} />
+          <Route path='/portfolio_details/' element={<UserProfileDetails />} />
         </Routes>
       </div>
     </div>
