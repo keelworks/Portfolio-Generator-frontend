@@ -8,38 +8,30 @@ import React from 'react';
 import { Card, Image } from '@mantine/core';
 
 // ProjectCard component
-const ProjectCard = ({ project, openProjectModal }) => {
-    // const [isHovered, setIsHovered] = useState(false);
+const ProjectCard = ({ project, openProjectModal, onHover }) => {
+    const handleMouseEnter = () => {
+        onHover({ title: project.title, description: project.description });
+    };
+
+    const handleMouseLeave = () => {
+        onHover({ title: '', description: '' });
+    };
+
+    console.log('project', project);
 
     return (
         <Card
             shadow="sm"
             padding="lg"
-            style={{ marginBottom: '1rem', overflow: 'hidden' }}
-            // onMouseEnter={() => setIsHovered(true)}
-            // onMouseLeave={() => setIsHovered(false)}
+            style={{ marginBottom: '1rem', overflow: 'hidden', padding: 0 }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
             onClick={() => openProjectModal(project)}
         >
             <div style={{ position: 'relative' }}>
                 <Card.Section >
                     <Image src={project.imageUrl} height={240} alt={project.title} />
                 </Card.Section>
-                {/* {isHovered && (
-                    <Text
-                        weight={500}
-                        size="md"
-                        style={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            color: 'white',
-                            zIndex: 1,
-                        }}
-                    >
-                        {project.title}
-                    </Text>
-                )} */}
             </div>
         </Card>
     );
