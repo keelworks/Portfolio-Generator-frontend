@@ -55,22 +55,87 @@ function UserPage() {
       title: 'Scenario',
       description: 'A brief description of Project One.',
       imageUrl: 'https://picsum.photos/600',
-      link: '#',
-      html: "<div><h1>Scenario </h1></div>",
+      link: 'https://ioflood.com/blog/java-classes/',
+      html: (
+        <div>
+          <h1>Scenario</h1>
+          <p>This is a detailed description inside the div.</p>
+        </div>
+      ),
     },
     {
-      title: 'Simulation',
+      title: 'Software Simulation',
       description: 'An overview of Project Two.',
       imageUrl: 'https://picsum.photos/400',
-      link: '#',
-      html: "<div><h1>Simulation </h1></div>",
+      link: 'https://ioflood.com/blog/java-classes/',
+      html: "",
     },
     {
-      title: 'Work Flow',
+      title: 'Role Over',
       description: 'Details about Project Three.',
       imageUrl: 'https://picsum.photos/600',
       link: '#',
-      html: "<div><h1>work flow</h1></div>",
+      html: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter Example</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <h1>Counter Example</h1>
+    <p>Button clicked <span id="counter">0</span> times</p>
+    <button id="incrementButton">Click Me</button>
+
+    <script src="scripts/counter.js"></script>
+</body>
+</html>`,
+      css: `body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+h1 {
+    color: #333;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #008cba;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #005f5f;
+}
+
+p {
+    font-size: 18px;
+}`,
+      js: `document.addEventListener('DOMContentLoaded', (event) => {
+    let counter = 0;
+
+    const counterDisplay = document.getElementById('counter');
+    const incrementButton = document.getElementById('incrementButton');
+
+    incrementButton.addEventListener('click', () => {
+        counter++;
+        counterDisplay.textContent = counter;
+    });
+}); `,
     },
     {
       title: 'Quiz',
@@ -94,7 +159,7 @@ function UserPage() {
             </div>
             <div className="content">
               <div className="section">
-                <h1>Design Philosophy:</h1>
+                <h1>Design Philosophy</h1>
                 <p>Lorem ipsum dolor sit amet...</p>
               </div>
               <div className="section">
