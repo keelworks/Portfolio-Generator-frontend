@@ -1,27 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import NavigationSidebar from './navigation/navigation';
-import {Routes, Route} from 'react-router';
-import ProfileComponent from './profile/profile';
+import WelcomePage from './profile/WelcomePage';
 import UserProfileDetails from './profile/UserProfileDetails';
 
-// eslint-disable-next-line require-jsdoc
-function dashBoard() {
+const DashBoard = () => {
+  const [activePage, setActivePage] = useState('profile');
+
+  const renderActivePage = () => {
+    switch (activePage) {
+      case 'portfolio_details':
+        return <UserProfileDetails />;
+      case 'profile':
+      default:
+        return <WelcomePage />;
+    }
+  };
+
   return (
-    <div className="container-fluid row" style={{marginTop: '0'}}>
-      <div className='col-3 col-md-2 col-lg-2 col-xl-2'
-        style={{padding: '0'}}>
-        <NavigationSidebar active='explore' />
+    <div className="container-fluid row" style={{ marginTop: '0' }}>
+      <div className='col-3 col-md-2 col-lg-2 col-xl-2' style={{ padding: '0' }}>
+        <NavigationSidebar active='explore' setActivePage={setActivePage} />
       </div>
-      <div className='col-9 col-md-10 col-lg-10 col-xl-10'
-        style={{position: 'relative'}}>
-        <Routes>
-          <Route path='/' element={<ProfileComponent />} />
-          <Route path='/profile' element={<ProfileComponent />} />
-          <Route path='/portfolio_details/' element={<UserProfileDetails />} />
-        </Routes>
+      <div className='col-9 col-md-10 col-lg-10 col-xl-10' style={{ position: 'relative' }}>
+        {renderActivePage()}
       </div>
     </div>
   );
-}
+};
 
-export default dashBoard;
+export default DashBoard;

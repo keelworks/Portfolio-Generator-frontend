@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   TextInput,
   Textarea,
@@ -8,24 +9,27 @@ import {
   Flex,
   NativeSelect,
   Avatar,
-  FileInput, Modal,
+  FileInput,
+  Modal,
+  Text,
 } from '@mantine/core';
-import {useForm} from '@mantine/form';
-import {Text} from '@mantine/core';
-import {useDispatch, useSelector} from 'react-redux';
-import {updateUserThunk} from '../../services/authorize-thunk';
+import { useForm } from '@mantine/form';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUserThunk } from '../../services/authorize-thunk';
 import firebase from '../../firebaseConfig';
-import {getStorage, ref, uploadBytes, getDownloadURL} from 'firebase/storage';
-import React, {useState} from 'react';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { updateProfession } from '../../reducers/authorize-reducer'; // import the action
 
 const WelcomePage = () => {
   const [avatar, setAvatar] = useState(null);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const user = useSelector((state) => state.currentUser);
   const dispatch = useDispatch();
+
   const handleAvatarChange = (e) => {
     setAvatar(e);
   };
+
   const handleAvatarClick = () => {
     setIsViewerOpen(true);
   };
@@ -68,6 +72,7 @@ const WelcomePage = () => {
       </div>
     );
   }
+
   const handleSubmit = async (values) => {
     try {
       const avatarUrl = await uploadAvatar();
@@ -79,7 +84,7 @@ const WelcomePage = () => {
         avatarUrl: avatarUrl,
       };
       // Dispatch an update action - replace with the actual thunk if different
-      const action = updateUserThunk({uid: user._id, userData});
+      const action = updateUserThunk({ uid: user._id, userData });
       const resultAction = await dispatch(action);
       const updatedUser = resultAction.payload;
 
@@ -91,30 +96,35 @@ const WelcomePage = () => {
       // Handle update error here
     }
   };
+
+  const handleProfessionChange = (event) => {
+    dispatch(updateProfession(event.currentTarget.value));
+    form.setFieldValue('profession', event.currentTarget.value);
+  };
+
   return (
-    <Container size="md" style={{marginTop: '2rem', marginBottom: '2rem'}}>
-      <Modal opened={isViewerOpen}
-        onClose={() => setIsViewerOpen(false)} >
-        <img src={form.values.avatarUrl} alt="Avatar" style={{width: '100%'}}/>
+    <Container size="md" style={{ marginTop: '2rem', marginBottom: '2rem' }}>
+      <Modal opened={isViewerOpen} onClose={() => setIsViewerOpen(false)}>
+        <img src={form.values.avatarUrl} alt="Avatar" style={{ width: '100%' }} />
       </Modal>
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Title
           order={2}
           size="h1"
-          style={{fontFamily: 'Greycliff CF, var(--mantine-font-family)'}}
+          style={{ fontFamily: 'Greycliff CF, var(--mantine-font-family)' }}
           fw={900}
           ta="center"
         >
           your information
         </Title>
 
-        <Flex style={{marginTop: '1rem', gap: '1rem'}}>
-          <Flex style={{flex: 1, alignItems: 'center', gap: '1rem'}}>
+        <Flex style={{ marginTop: '1rem', gap: '1rem' }}>
+          <Flex style={{ flex: 1, alignItems: 'center', gap: '1rem' }}>
             <Avatar
               src={form.values.avatarUrl}
               size="lg"
               radius="sm"
-              style={{cursor: 'pointer', height: '100%'}}
+              style={{ cursor: 'pointer', height: '100%' }}
               onClick={handleAvatarClick}
             />
             <FileInput
@@ -124,17 +134,17 @@ const WelcomePage = () => {
               placeholder=".jpg .Png are acceptable"
               accept="image/*"
               onChange={handleAvatarChange}
-              style={{flex: 1, width: 50}}
+              style={{ flex: 1, width: 50 }}
             />
           </Flex>
         </Flex>
-        <Flex style={{marginTop: '1rem', gap: '1rem'}}>
+        <Flex style={{ marginTop: '1rem', gap: '1rem' }}>
           <TextInput
             label="FirstName"
             name="firstname"
             variant="filled"
             {...form.getInputProps('firstname')}
-            style={{flex: 1}}
+            style={{ flex: 1 }}
           />
 
           <TextInput
@@ -142,10 +152,10 @@ const WelcomePage = () => {
             name="lastName"
             variant="filled"
             {...form.getInputProps('lastName')}
-            style={{flex: 1}}
+            style={{ flex: 1 }}
           />
         </Flex>
-        <Flex style={{marginTop: '1rem', gap: '1rem'}}>
+        <Flex style={{ marginTop: '1rem', gap: '1rem' }}>
           <NativeSelect
             label="Profession"
             name="profession"
@@ -154,7 +164,8 @@ const WelcomePage = () => {
             data={
               ['Instructional Designer', 'UI/UX Designer', 'Graphics Designer']
             }
-            style={{flex: 1}}
+            onChange={handleProfessionChange}
+            style={{ flex: 1 }}
           />
         </Flex>
         <Textarea

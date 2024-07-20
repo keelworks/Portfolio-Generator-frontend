@@ -1,48 +1,59 @@
-import {createSlice} from '@reduxjs/toolkit';
+/* eslint-disable no-trailing-spaces */
+// authorizeSlice.js
+import { createSlice } from '@reduxjs/toolkit';
 import {
   deleteUserThunk,
-  loginThunk, logoutThunk,
-  registerThunk, updateUserThunk,
+  loginThunk, 
+  logoutThunk,
+  registerThunk, 
+  updateUserThunk,
 } from '../services/authorize-thunk';
 
 const authorizeSlice = createSlice({
   name: 'authorize',
   initialState: null,
-  reducers: {},
+  reducers: {
+    updateProfession: (state, action) => {
+      if (state) {
+        state.profession = action.payload;
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
-        .addCase(loginThunk.fulfilled, (state, action) => {
-          return action.payload;
-        })
-        .addCase(loginThunk.rejected, (state, action) => {
-          return {error: action.payload};
-        })
-        .addCase(logoutThunk.fulfilled, (state) => {
-          return null;
-        })
-        .addCase(registerThunk.fulfilled, (state, {payload}) => {
-        })
-        .addCase(registerThunk.rejected, (state, {payload}) => {
-          return null;
-        })
-        .addCase(deleteUserThunk.fulfilled, (state) => {
-          return null;
-        })
-        .addCase(deleteUserThunk.rejected, (state, action) => {
+      .addCase(loginThunk.fulfilled, (state, action) => {
+        return action.payload;
+      })
+      .addCase(loginThunk.rejected, (state, action) => {
+        return { error: action.payload };
+      })
+      .addCase(logoutThunk.fulfilled, (state) => {
+        return null;
+      })
+      .addCase(registerThunk.fulfilled, (state, { payload }) => {
+        return payload;
+      })
+      .addCase(registerThunk.rejected, (state, { payload }) => {
+        return null;
+      })
+      .addCase(deleteUserThunk.fulfilled, (state) => {
+        return null;
+      })
+      .addCase(deleteUserThunk.rejected, (state, action) => {
         // Handle error here
-          console.error('Delete user failed:', action.error);
-        })
-        .addCase(updateUserThunk.fulfilled, (state, action) => {
-          // Update the state with the new user data
-          // Assuming the payload contains the updated user information
-          return action.payload;
-        })
-        .addCase(updateUserThunk.rejected, (state, action) => {
+        console.error('Delete user failed:', action.error);
+      })
+      .addCase(updateUserThunk.fulfilled, (state, action) => {
+        // Update the state with the new user data
+        // Assuming the payload contains the updated user information
+        return action.payload;
+      })
+      .addCase(updateUserThunk.rejected, (state, action) => {
         // Optionally update state to indicate error
-          return {...state, error: action.payload};
-        })
-    ;
+        return { ...state, error: action.payload };
+      });
   },
 });
 
+export const { updateProfession } = authorizeSlice.actions;
 export default authorizeSlice.reducer;

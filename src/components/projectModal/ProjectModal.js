@@ -34,6 +34,11 @@ function ProjectModal({ project, projects, opened, onClose }) {
           </head>
           <body>
             ${selectedProject.html}
+            <script>
+              document.addEventListener('DOMContentLoaded', function() {
+                ${selectedProject.js || ''}
+              });
+            </script>
           </body>
           </html>
         `;
@@ -67,7 +72,22 @@ function ProjectModal({ project, projects, opened, onClose }) {
               borderRadius: '10px',
             }}
           >
-            {selectedProject?.html ? (
+            {selectedProject?.videoUrl ? (
+              <video
+                key="video-player"
+                controls
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  border: 'none',
+                  borderRadius: '10px',
+                }}
+                title={selectedProject.title}
+              >
+                <source src={selectedProject.videoUrl} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ) : selectedProject?.html ? (
               <iframe
                 key="html-iframe"
                 ref={iframeRef}

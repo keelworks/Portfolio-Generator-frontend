@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable quote-props */
 /* eslint-disable key-spacing */
 import React, { useState, useEffect } from 'react';
@@ -12,16 +13,12 @@ const useStyles = createStyles((theme) => ({
   header: {
     paddingBottom: theme.spacing.md,
     marginBottom: `calc(${theme.spacing.md} * 1.5)`,
-    borderBottom: `${rem(1)} solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
-    }`,
+    borderBottom: `${rem(1)} solid ${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]}`,
   },
   footer: {
     paddingTop: theme.spacing.md,
     marginTop: theme.spacing.md,
-    borderTop: `${rem(1)} solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
-    }`,
+    borderTop: `${rem(1)} solid ${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]}`,
   },
   link: {
     ...theme.fn.focusStyles(),
@@ -61,24 +58,23 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const VerticalNavbar = () => {
+const VerticalNavbar = ({ setActivePage }) => {
   const { classes, cx } = useStyles();
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 920);
   const user = useSelector((state) => state.currentUser);
   const profession = useSelector((state) => state.currentUser.profession);
   const professionWebsites = {
-    'Instruction Designer': `/user/${user._id}`,
+    'Instruction Designer': `/Instruction_Designer/portfolio/${user._id}`,
     'UI/UX Designer': 'https://ui-ux-design-example.com',
     'Graphics Designer': 'https://graphics-design-example.com',
   };
 
   console.log(profession, 'user', professionWebsites[profession]);
 
-
   const data = [
-    { link: '/dashboard/profile', label: 'Dashboard', icon: IconLayoutDashboard },
-    { link: `/dashboard/portfolio_details/`, label: 'Portfolio Details', icon: IconLayoutDashboard },
-    { link: profession ? professionWebsites[profession] : '/user/default', label: 'Website', icon: IconWorldWww },
+    { link: 'profile', label: 'Dashboard', icon: IconLayoutDashboard },
+    { link: 'portfolio_details', label: 'Portfolio Details', icon: IconLayoutDashboard },
+    { link: profession ? professionWebsites[profession] : '/user/default', label: 'Website', icon: IconWorldWww, external: true },
   ];
 
   useEffect(() => {
@@ -93,13 +89,20 @@ const VerticalNavbar = () => {
     };
   }, []);
 
+  const handleLinkClick = (link, external) => {
+    if (external) {
+      window.open(link, '_blank');
+    } else {
+      setActivePage(link);
+    }
+  };
+
   const links = data.map((item) => (
     <a
       className={cx(classes.link)}
-      href={item.link}
+      href="#"
       key={item.label}
-      target="_blank"
-      rel="noopener noreferrer"
+      onClick={() => handleLinkClick(item.link, item.external)}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
       <span style={{ display: isSmallScreen ? 'none' : 'inline' }}>
@@ -149,7 +152,7 @@ const VerticalNavbar = () => {
           </span>
         </a>
 
-        <a href="#" className={classes.link} onClick={handleDeleteAccountClick}>
+        <a href="#" className={cx(classes.link)} onClick={handleDeleteAccountClick}>
           <IconTrash className={classes.linkIcon} stroke={1.5} />
           <span style={{ display: isSmallScreen ? 'none' : 'inline' }}>
             Delete account
