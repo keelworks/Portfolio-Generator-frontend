@@ -13,6 +13,22 @@ import { setProfession } from '../../services/professionSlice';
 const UserProfileDetails = () => {
 
   const dispatch = useDispatch();
+  // const [formData, setFormData] = useState({
+  //   username: '',
+  //   password: '',
+  //   firstName: '',
+  //   lastName: '',
+  //   dob: '',
+  //   profession: '',
+  //   bio: '',
+  //   avatarUrl: '',
+  //   role: '',
+  //   html: '', // For storing HTML content
+  //   css: '', // For storing CSS content
+  //   js: '', // For storing JS content
+  //   video: null // For storing video file
+  // });
+
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -25,13 +41,52 @@ const UserProfileDetails = () => {
     role: '',
     html: '', // For storing HTML content
     css: '', // For storing CSS content
-    js: '' // For storing JS content
+    js: '', // For storing JS content
+    video: null, // For storing video file
+    portfolioImage: null,
+    linkedIn: '',
+    email: '',
+    behance: '',
+    designPhilosophy: '',
+    samplesOfWork: '',
+    scenario: {
+      title: '',
+      thumbnail: null,
+      details: '',
+      html: '', // For storing HTML content
+      css: '', // For storing CSS content
+      js: '', // For storing JS content
+    },
+    softwareSimulation: {
+      title: '',
+      thumbnail: null,
+      details: '',
+      videoFile: null
+    },
+    workFlow: {
+      title: '',
+      thumbnail: null,
+      details: '',
+      html: '', // For storing HTML content
+      css: '', // For storing CSS content
+      js: '', // For storing JS content
+    },
+    quiz: {
+      title: '',
+      thumbnail: null,
+      details: '',
+      html: '', // For storing HTML content
+      css: '', // For storing CSS content
+      js: '', // For storing JS content
+    }
   });
 
   const handleProfessionChange = (value) => {
     setFormData({ ...formData, profession: value });
     dispatch(setProfession(value));
   };
+
+  console.log('formData', formData);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,13 +103,24 @@ const UserProfileDetails = () => {
       role: formElements.role.value,
       html: formData.html, // Maintain file data
       css: formData.css, // Maintain file data
-      js: formData.js // Maintain file data
+      js: formData.js, // Maintain file data
+      video: formData.video // Maintain video file
+      
     };
 
     setFormData(updatedFormData);
 
     try {
-      const response = await axios.post('YOUR_BACKEND_ENDPOINT', updatedFormData);
+      const formDataForUpload = new FormData();
+      Object.keys(updatedFormData).forEach(key => {
+        formDataForUpload.append(key, updatedFormData[key]);
+      });
+
+      const response = await axios.post('YOUR_BACKEND_ENDPOINT', formDataForUpload, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
       console.log('User added successfully:', response.data);
       // Handle success (e.g., clear the form or show a success message)
     } catch (error) {
@@ -97,6 +163,17 @@ const UserProfileDetails = () => {
     }
   };
 
+  const handleVideoUpload = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type.startsWith('video/')) {
+      setFormData(prevData => ({
+        ...prevData,
+        video: file
+      }));
+    } else {
+      alert('Please upload a valid video file.');
+    }
+  };
 
   const readFileContent = (file) => {
     return new Promise((resolve, reject) => {
@@ -211,10 +288,15 @@ const UserProfileDetails = () => {
               />
             </Grid.Col>
             <Grid.Col span={12}>
+            <div>HTML File</div>
               <input type="file" webkitdirectory="true" multiple onChange={handleFileUpload} />
             </Grid.Col>
             <Grid.Col span={12}>
-              <Button type="submit">Add User</Button>
+            <div>Video File</div>
+              <input type="file" accept="video/*" onChange={handleVideoUpload} />
+            </Grid.Col>
+            <Grid.Col span={12}>
+              <Button type="submit">submit details</Button>
             </Grid.Col>
           </Grid>
         </form>

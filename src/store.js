@@ -1,7 +1,7 @@
-import {configureStore} from '@reduxjs/toolkit';
+// store.js
+import { configureStore } from '@reduxjs/toolkit';
 import authorizeReducer from './reducers/authorize-reducer';
 import localStorageMiddleware from './localStorageMiddleware';
-
 
 const savedCurrentUser = localStorage.getItem('currentUser');
 const preloadedState = {
@@ -15,7 +15,6 @@ const store = configureStore({
     userById: userByIdReducer,
   },
   preloadedState,
-  // eslint-disable-next-line max-len
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(localStorageMiddleware),
 });
 
