@@ -115,7 +115,7 @@ const WelcomePage = () => {
           fw={900}
           ta="center"
         >
-          your information
+          Profile Information
         </Title>
 
         <Flex style={{ marginTop: '1rem', gap: '1rem' }}>

@@ -64,7 +64,7 @@ const VerticalNavbar = ({ setActivePage }) => {
   const user = useSelector((state) => state.currentUser);
   const profession = useSelector((state) => state.currentUser.profession);
   const professionWebsites = {
-    'Instruction Designer': `/Instruction_Designer/portfolio/${user._id}`,
+    'Instructional Designer': `/Instruction_Designer/portfolio/${user._id}`,
     'UI/UX Designer': 'https://ui-ux-design-example.com',
     'Graphics Designer': 'https://graphics-design-example.com',
   };
