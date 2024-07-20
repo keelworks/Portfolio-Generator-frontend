@@ -12,7 +12,7 @@ import './index.css';
 import Login from './components/authorize/login';
 import Signup from './components/authorize/signup';
 import DashBoard from './components/index';
-import UserPageInstructionalDesigner from './components/profile/UserPageInstructionalDesigner';
+import UserPageInstructionalDesigner from './components/profile/UserPageInstructionalDesigner.js';
 import FourZeroFourPage from './components/FourZeroFourPage';
 import reportWebVitals from './reportWebVitals';
 
