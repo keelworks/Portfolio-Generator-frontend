@@ -43,7 +43,7 @@ function Login() {
   const isFormValid = username.trim() !== '' && password.trim() !== '';
 
   useEffect(() => {
-    if (user && user._id) {
+    if (user && user.id) {
       localStorage.setItem('currentUser', JSON.stringify(user));
       navigate('/dashBoard');
     } else if (user && user.error === 'User does not exist') {
@@ -109,12 +109,6 @@ function Login() {
           Create account
         </Anchor>
       </Text>
-      {/* <Text color="dimmed" size="sm" align="center" mt={5}>
-        <Anchor component="button" size="sm">
-          Forgot password?
-        </Anchor>
-      </Text> */}
-      {/* <Divider my="lg" label="or" labelPosition="center" /> */}
       <Group position="center">
         {/* <Button leftIcon={<BrandGoogle />} variant="white" align="center">
           Connect to google

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import {
   TextInput,
@@ -34,17 +35,30 @@ const WelcomePage = () => {
     setIsViewerOpen(true);
   };
 
+  // const uploadAvatar = async () => {
+  //   if (!avatar) return user.avatarUrl;
+  //   const storage = getStorage(firebase);
+  //   const storageRef = ref(storage, 'avatars/' + avatar.name);
+  //   console.log('storageRef', storageRef);
+
+  //   await uploadBytes(storageRef, avatar);
+  //   return getDownloadURL(storageRef);
+  // };
   const uploadAvatar = async () => {
     if (!avatar) return user.avatarUrl;
     const storage = getStorage(firebase);
     const storageRef = ref(storage, 'avatars/' + avatar.name);
     await uploadBytes(storageRef, avatar);
-    return getDownloadURL(storageRef);
+    const corsProxy = 'https://cors-anywhere.herokuapp.com/';
+    const url = `https://firebasestorage.googleapis.com/v0/b/${storageRef.bucket}/o?name=${encodeURIComponent(storageRef.name)}`;
+    const response = await fetch(corsProxy + url);
+    const data = await response.json();
+    return data.mediaLink;
   };
 
   const form = useForm({
     initialValues: {
-      avatarUrl: user?.avatarUrl || 'https://firebasestorage.googleapis.com/v0/b/portfolio-generator-394004.appspot.com/o/avatars%2Fcxk.jpg?alt=media&token=29c9ba5e-ea2a-4c76-9e15-4ba58ff13c69',
+      avatarUrl: user?.avatarUrl || '',
       resumeUrl: user?.resumeUrl || '',
       firstname: user?.firstName || '',
       lastName: user?.lastName || '',
@@ -52,9 +66,8 @@ const WelcomePage = () => {
       bio: user?.bio || '',
     },
     validate: {
-      firstname: (value) => value.trim().length < 2,
-      lastName: (value) => value.trim().length === 0,
-      email: (value) => !/^\S+@\S+$/.test(value),
+      firstname: (value) => value.trim().length < 2 ? 'First name must have at least 2 characters' : null,
+      lastName: (value) => value.trim().length === 0 ? 'Last name is required' : null,
     },
   });
 
@@ -75,6 +88,7 @@ const WelcomePage = () => {
 
   const handleSubmit = async (values) => {
     try {
+      console.log('Form values:', values);
       const avatarUrl = await uploadAvatar();
       const userData = {
         firstName: values.firstname,
@@ -84,13 +98,13 @@ const WelcomePage = () => {
         avatarUrl: avatarUrl,
       };
       // Dispatch an update action - replace with the actual thunk if different
-      const action = updateUserThunk({ uid: user._id, userData });
+      const action = updateUserThunk({ uid: user.id, userData });
       const resultAction = await dispatch(action);
       const updatedUser = resultAction.payload;
 
       console.log('Update successful: ', updatedUser);
       // Additional actions after successful update can go here
-      alert('You already successfully saved!');
+      alert('You have successfully saved!');
     } catch (error) {
       console.error('Update failed: ', error);
       // Handle update error here

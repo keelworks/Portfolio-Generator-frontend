@@ -14,17 +14,22 @@ export const registerUser = async (userData) => {
     if (error.response && error.response.status === 400) {
       throw new Error('User already exist');
     }
-    // console.error('Registration failed:', error);
     throw error;
   }
 };
 
-export const loginUser = async ({username, password}) => {
+// Login user and fetch user data
+export const loginUser = async ({ username, password }) => {
   try {
-    const response = await api.post(`${API_BASE}/login`, {username, password});
-    return response.data;
+    const loginResponse = await api.post(`${API_BASE}/login`, { username, password });
+    const userId = loginResponse.data.id || loginResponse.data.userId; // Ensure you're accessing the right key
+    if (!userId) {
+      throw new Error('User ID not found in the response');
+    }
+    // Fetch user data after successful login
+    const userDataResponse = await api.get(`${API_BASE}/${userId}`);
+    return userDataResponse.data;
   } catch (error) {
-    // console.error('Login failed:', error);
     if (error.response && error.response.status === 403) {
       throw new Error('User does not exist');
     }
