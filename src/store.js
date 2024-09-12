@@ -8,11 +8,13 @@ const preloadedState = {
   currentUser: savedCurrentUser ? JSON.parse(savedCurrentUser) : null,
 };
 import userByIdReducer from './reducers/website-reducer';
+import formReducer from './reducers/form-reducer';
 
 const store = configureStore({
   reducer: {
     currentUser: authorizeReducer,
     userById: userByIdReducer,
+    form: formReducer,
   },
   preloadedState,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(localStorageMiddleware),
