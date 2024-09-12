@@ -64,7 +64,7 @@ const VerticalNavbar = ({ setActivePage }) => {
   const user = useSelector((state) => state.currentUser);
   const profession = useSelector((state) => state.currentUser.profession);
   const professionWebsites = {
-    'Instructional Designer': `/Instruction_Designer/portfolio/${user._id}`,
+    'Instructional Designer': `/Instruction_Designer/portfolio/${user.id}`,
     'UI/UX Designer': 'https://ui-ux-design-example.com',
     'Graphics Designer': 'https://graphics-design-example.com',
   };
@@ -113,7 +113,7 @@ const VerticalNavbar = ({ setActivePage }) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userId = useSelector((state) => state.currentUser ? state.currentUser._id : null);
+  const userId = useSelector((state) => state.currentUser ? state.currentUser.id : null);
 
   const handleLogoutClick = () => {
     console.log('Logout button clicked');

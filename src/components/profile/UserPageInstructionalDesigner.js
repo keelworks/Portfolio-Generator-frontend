@@ -32,8 +32,6 @@ function UserPageInstructionalDesigner() {
     }
   }, [userId, dispatch]);
     
-    console.log(userId);
-
   const [modalOpened, setModalOpened] = useState(false);
   const [currentProject, setCurrentProject] = useState(null);
   const [hoveredProject, setHoveredProject] = useState({ title: '', description: '' });
@@ -456,7 +454,7 @@ const questions = [
             <div className="content">
               <div className="section">
                 <h1>Design Philosophy</h1>
-                <p>Lorem ipsum dolor sit amet...</p>
+                <p>{user?.bio || 'No bio available.'}</p>
               </div>
               <div className="section">
                 <h1 size="lg" style={{ marginBottom: '1rem' }}>{hoveredProject.title || 'Samples Of Work'}</h1>
