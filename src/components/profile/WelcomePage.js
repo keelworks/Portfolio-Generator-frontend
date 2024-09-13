@@ -35,15 +35,6 @@ const WelcomePage = () => {
     setIsViewerOpen(true);
   };
 
-  // const uploadAvatar = async () => {
-  //   if (!avatar) return user.avatarUrl;
-  //   const storage = getStorage(firebase);
-  //   const storageRef = ref(storage, 'avatars/' + avatar.name);
-  //   console.log('storageRef', storageRef);
-
-  //   await uploadBytes(storageRef, avatar);
-  //   return getDownloadURL(storageRef);
-  // };
   const uploadAvatar = async () => {
     if (!avatar) return user.avatarUrl;
     const storage = getStorage(firebase);
@@ -64,10 +55,12 @@ const WelcomePage = () => {
       lastName: user?.lastName || '',
       profession: user?.profession || '',
       bio: user?.bio || '',
+      email: user?.email || '',
     },
     validate: {
       firstname: (value) => value.trim().length < 2 ? 'First name must have at least 2 characters' : null,
       lastName: (value) => value.trim().length === 0 ? 'Last name is required' : null,
+      email: (value) => /^\S+@\S+$/.test(value) ? null : 'Invalid email address', // Add email validation
     },
   });
 
@@ -96,6 +89,7 @@ const WelcomePage = () => {
         profession: values.profession,
         bio: values.bio,
         avatarUrl: avatarUrl,
+        email: values.email, // Add email to submission data
       };
       // Dispatch an update action - replace with the actual thunk if different
       const action = updateUserThunk({ uid: user.id, userData });
@@ -103,11 +97,9 @@ const WelcomePage = () => {
       const updatedUser = resultAction.payload;
 
       console.log('Update successful: ', updatedUser);
-      // Additional actions after successful update can go here
       alert('You have successfully saved!');
     } catch (error) {
       console.error('Update failed: ', error);
-      // Handle update error here
     }
   };
 
@@ -166,6 +158,15 @@ const WelcomePage = () => {
             name="lastName"
             variant="filled"
             {...form.getInputProps('lastName')}
+            style={{ flex: 1 }}
+          />
+        </Flex>
+        <Flex style={{ marginTop: '1rem', gap: '1rem' }}>
+          <TextInput
+            label="Email"
+            name="email"
+            variant="filled"
+            {...form.getInputProps('email')}
             style={{ flex: 1 }}
           />
         </Flex>

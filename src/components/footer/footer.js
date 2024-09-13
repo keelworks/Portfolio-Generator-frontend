@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Footer as MantineFooter, Text, Anchor, Group, Container } from '@mantine/core';
 import ContactModal from '../ContactModal/contactModal';
 
-const Footer = ({ firstName, lastName }) => {
+const Footer = ({ user }) => {
   const [modalOpened, setModalOpened] = useState(false);
 
   const handleSubmit = (event) => {
@@ -20,7 +20,7 @@ const Footer = ({ firstName, lastName }) => {
               LinkedIn
           </Anchor>
           <Anchor size="sm" onClick={() => setModalOpened(true)}>
-            johndoe@gmail.com
+            {user.email ? user?.email : 'johndoe@gmail.com' }
           </Anchor>
           <ContactModal
             opened={modalOpened}
@@ -31,7 +31,7 @@ const Footer = ({ firstName, lastName }) => {
               GitHub
           </Anchor>
         </Group>
-        <Text size="sm" style={{ marginTop: '1em' }}>&copy;{firstName}{lastName}{new Date().getFullYear()}</Text>
+        <Text size="sm" style={{ marginTop: '1em' }}>&copy;{user?.firstName}{user?.lastName}{new Date().getFullYear()}</Text>
       </Container>
     </MantineFooter>
   );

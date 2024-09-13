@@ -493,7 +493,7 @@ const questions = [
           )}
         </Container>
       </div>
-      <Footer firstName={user?.firstName} lastname={user?.lastname} />
+      <Footer user={user} />
     </>
   );
 }
